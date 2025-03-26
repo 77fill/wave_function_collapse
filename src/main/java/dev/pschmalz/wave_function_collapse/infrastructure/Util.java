@@ -1,0 +1,121 @@
+package dev.pschmalz.wave_function_collapse.infrastructure;
+
+import com.google.common.reflect.ClassPath;
+import org.apache.commons.lang3.function.FailableConsumer;
+import org.apache.commons.lang3.function.FailableFunction;
+import org.apache.commons.lang3.function.FailablePredicate;
+import org.apache.commons.lang3.stream.Streams;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
+
+public class Util {
+    String getName(ClassPath.ResourceInfo resourceInfo) {
+        return resourceInfo.getResourceName();
+    }
+
+    String getSuffix(String fileName) {
+        return Arrays.stream(fileName.split("\\."))
+                .toList()
+                .getLast();
+    }
+
+    <T> Pair<T,T> toPair(T obj) {
+        return ImmutablePair.of(obj, obj);
+    }
+
+    InputStream getContent(ClassPath.ResourceInfo resourceInfo) throws IOException {
+        return resourceInfo.asByteSource().openBufferedStream();
+    }
+
+    <T> ExtendedStream<T> extendedStream(Collection<T> items) {
+        return new ExtendedStream<>(Streams.failableStream(items));
+    }
+
+    <T> ExtendedStream<T> extendedStream(T onlyOne) {
+        return extendedStream(List.of(onlyOne));
+    }
+}
+
+class ExtendedStream<T> {
+    private Streams.FailableStream<T> stream;
+
+    public ExtendedStream(Streams.FailableStream<T> stream) {
+        this.stream = stream;
+    }
+
+    public <U,V, R,S> ExtendedStream<Pair<R,S>> mapPair(FailableFunction<U, R, ?> mapperLeft, FailableFunction<V, S, ?> mapperRight) {
+        var specificStream = (Streams.FailableStream<Pair<U,V>>) stream;
+
+        return new ExtendedStream<>(
+                specificStream.map(pair ->
+                        ImmutablePair.of(
+                                mapperLeft.apply(pair.getLeft()),
+                                mapperRight.apply(pair.getRight())
+                        )) );
+    }
+
+    public Streams.FailableStream<T> toFailableStream() {
+        return stream;
+    }
+
+    public <R> ExtendedStream<R> flatMap(Function<T,Collection<R>> oneToCollection) {
+        Function<T,Stream<R>> oneToStream =
+                one -> oneToCollection.apply(one).stream();
+
+        return new ExtendedStream<>( Streams.failableStream( stream.stream().flatMap(oneToStream) ) );
+    }
+
+    public ExtendedStream<Pair<T,T>> duplicateIntoPair() {
+        return map(item -> ImmutablePair.of(item,item));
+    }
+
+    // Delegating to stream
+
+    public boolean allMatch(FailablePredicate<T, ?> predicate) {
+        return stream.allMatch(predicate);
+    }
+
+    public Stream<T> stream() {
+        return stream.stream();
+    }
+
+    public <R> ExtendedStream<R> map(FailableFunction<T, R, ?> mapper) {
+        return new ExtendedStream<>( stream.map(mapper) );
+    }
+
+    public <A, R> R collect(Collector<? super T, A, R> collector) {
+        return stream.collect(collector);
+    }
+
+    public void forEach(FailableConsumer<T, ?> action) {
+        stream.forEach(action);
+    }
+
+    public T reduce(T identity, BinaryOperator<T> accumulator) {
+        return stream.reduce(identity, accumulator);
+    }
+
+    public boolean anyMatch(FailablePredicate<T, ?> predicate) {
+        return stream.anyMatch(predicate);
+    }
+
+    public ExtendedStream<T> filter(FailablePredicate<T, ?> predicate) {
+        return new ExtendedStream<>( stream.filter(predicate) );
+    }
+
+    public <A, R> R collect(Supplier<R> supplier, BiConsumer<R, ? super T> accumulator, BiConsumer<R, R> combiner) {
+        return stream.collect(supplier, accumulator, combiner);
+    }
+}
