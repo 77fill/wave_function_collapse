@@ -7,6 +7,7 @@ import dev.pschmalz.wave_function_collapse.infrastructure.MainPApplet;
 import dev.pschmalz.wave_function_collapse.infrastructure.ResourceStoreImpl;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages_CreateTiles;
 import dev.pschmalz.wave_function_collapse.usecase.LoadResources_IntoTempDirectory;
+import dev.pschmalz.wave_function_collapse.usecase.ShowTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystem_TempDirectory;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ResourceStore;
 import processing.core.PApplet;
@@ -41,7 +42,8 @@ public class Main {
                 new MainPApplet(
                         eventQueue,
                         loadResources_intoTempDirectory,
-                        chooseTileImages_createTiles
+                        chooseTileImages_createTiles,
+                        showTileImages
                 ));
     }
 
@@ -59,6 +61,12 @@ public class Main {
                         fileSystem_tempDir,
                         tiles,
                         background,
+                        display
+                );
+
+        showTileImages =
+                new ShowTileImages(
+                        tiles,
                         display
                 );
     }
@@ -80,5 +88,6 @@ public class Main {
     private static Executor background, display;
     private static LoadResources_IntoTempDirectory loadResources_intoTempDirectory;
     private static ChooseTileImages_CreateTiles chooseTileImages_createTiles;
+    private static ShowTileImages showTileImages;
 
 }
