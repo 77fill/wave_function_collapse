@@ -13,7 +13,7 @@ public class ShowTileImages {
     public void execute(View view) {
         display.execute(() -> {
             view.clear();
-            view.showImages(tiles.map(Tile::file));
+            view.showImages(tiles.map(Tile::getFile));
         });
     }
 

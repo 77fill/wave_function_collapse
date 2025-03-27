@@ -11,4 +11,6 @@ public interface View {
     void clear();
 
     void showImages(Stream<File> images);
+
+    void restraintsGenerated();
 }

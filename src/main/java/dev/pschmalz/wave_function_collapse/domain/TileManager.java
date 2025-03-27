@@ -15,4 +15,8 @@ public class TileManager {
     public <T> Stream<T> map(Function<Tile,T> mapper) {
         return tiles.stream().map(mapper);
     }
+
+    public void generateConstraints() {
+
+    }
 }

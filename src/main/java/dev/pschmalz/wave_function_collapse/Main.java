@@ -6,6 +6,7 @@ import dev.pschmalz.wave_function_collapse.infrastructure.FileSystem_TempDirecto
 import dev.pschmalz.wave_function_collapse.infrastructure.MainPApplet;
 import dev.pschmalz.wave_function_collapse.infrastructure.ResourceStoreImpl;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages_CreateTiles;
+import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
 import dev.pschmalz.wave_function_collapse.usecase.LoadResources_IntoTempDirectory;
 import dev.pschmalz.wave_function_collapse.usecase.ShowTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystem_TempDirectory;
@@ -43,7 +44,8 @@ public class Main {
                         eventQueue,
                         loadResources_intoTempDirectory,
                         chooseTileImages_createTiles,
-                        showTileImages
+                        showTileImages,
+                        generateTileConstraints
                 ));
     }
 
@@ -69,6 +71,13 @@ public class Main {
                         tiles,
                         display
                 );
+
+        generateTileConstraints =
+                new GenerateTileConstraints(
+                        tiles,
+                        background,
+                        display
+                );
     }
 
     private static void createInfrastructure() throws IOException {
@@ -89,5 +98,6 @@ public class Main {
     private static LoadResources_IntoTempDirectory loadResources_intoTempDirectory;
     private static ChooseTileImages_CreateTiles chooseTileImages_createTiles;
     private static ShowTileImages showTileImages;
+    private static GenerateTileConstraints generateTileConstraints;
 
 }

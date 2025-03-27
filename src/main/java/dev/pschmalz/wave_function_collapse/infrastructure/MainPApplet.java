@@ -1,14 +1,13 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
-import com.google.common.collect.ImmutableList;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.ImagesView;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.SubView;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages_CreateTiles;
+import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
 import dev.pschmalz.wave_function_collapse.usecase.LoadResources_IntoTempDirectory;
 import dev.pschmalz.wave_function_collapse.usecase.ShowTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 import java.io.File;
 import java.util.Optional;
@@ -19,15 +18,17 @@ public class MainPApplet extends PApplet implements View {
     private Queue<Runnable> eventQueue;
     private LoadResources_IntoTempDirectory loadResources_intoTempDirectory;
     private ChooseTileImages_CreateTiles chooseTileImages_createTiles;
+    private GenerateTileConstraints generateTileConstraints;
     private ShowTileImages showTileImages;
     private Optional<SubView> toBeShown;
     private ImagesView imagesView;
 
-    public MainPApplet(Queue<Runnable> eventQueue, LoadResources_IntoTempDirectory loadResources_intoTempDirectory, ChooseTileImages_CreateTiles chooseTileImages_createTiles, ShowTileImages showTileImages) {
+    public MainPApplet(Queue<Runnable> eventQueue, LoadResources_IntoTempDirectory loadResources_intoTempDirectory, ChooseTileImages_CreateTiles chooseTileImages_createTiles, ShowTileImages showTileImages, GenerateTileConstraints generateTileConstraints) {
         this.eventQueue = eventQueue;
         this.loadResources_intoTempDirectory = loadResources_intoTempDirectory;
         this.chooseTileImages_createTiles = chooseTileImages_createTiles;
         this.showTileImages = showTileImages;
+        this.generateTileConstraints = generateTileConstraints;
         this.imagesView = new ImagesView(this, new Util());
     }
 
@@ -57,6 +58,7 @@ public class MainPApplet extends PApplet implements View {
     @Override
     public void tilesLoaded() {
         showTileImages.execute(this);
+        //generateTileRestraints.execute(this);
     }
 
     @Override
@@ -68,6 +70,11 @@ public class MainPApplet extends PApplet implements View {
                         .map(this::loadImage)
         );
         toBeShown = Optional.of(imagesView);
+    }
+
+    @Override
+    public void restraintsGenerated() {
+
     }
 
     @Override
