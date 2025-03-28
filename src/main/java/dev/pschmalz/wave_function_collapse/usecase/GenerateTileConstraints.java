@@ -2,27 +2,26 @@ package dev.pschmalz.wave_function_collapse.usecase;
 
 import dev.pschmalz.wave_function_collapse.domain.TileManager;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Executor;
-
+@Component
 public class GenerateTileConstraints {
     private TileManager tiles;
-    private Executor background, display;
     private View view;
 
+    @Async("background")
     public void execute(View view) {
         this.view = view;
-        background.execute(this::executeProper);
-    }
-
-    public void executeProper() {
         tiles.generateConstraints();
-        display.execute(view::restraintsGenerated);
     }
 
-    public GenerateTileConstraints(TileManager tiles, Executor background, Executor display) {
+    @Async("display")
+    private void restraintsGenerated() {
+        view.restraintsGenerated();
+    }
+
+    public GenerateTileConstraints(TileManager tiles) {
         this.tiles = tiles;
-        this.background = background;
-        this.display = display;
     }
 }

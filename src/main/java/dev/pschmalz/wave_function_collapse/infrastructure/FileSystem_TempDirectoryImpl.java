@@ -1,10 +1,8 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
-import static java.nio.file.Files.notExists;
-
 import dev.pschmalz.wave_function_collapse.usecase.data.CustomResource;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystem_TempDirectory;
-import org.apache.commons.lang3.stream.Streams;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +11,9 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.Optional;
 
+import static java.nio.file.Files.notExists;
+
+@Component
 public class FileSystem_TempDirectoryImpl implements FileSystem_TempDirectory {
     private Optional<Path> tempDir;
 

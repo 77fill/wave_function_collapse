@@ -1,36 +1,31 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view;
 
-import static com.google.common.collect.Streams.zip;
-
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Range;
 import com.google.common.collect.Streams;
 import dev.pschmalz.wave_function_collapse.infrastructure.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+@Component
 public class ImagesView implements SubView {
     private int distanceBetween = 10;
     private int distanceEdge = 10;
     private int size = 30;
 
+    @Autowired
     private Util util;
 
+    @Autowired
     private PApplet p;
-    private List<PImage> images = List.of();
 
-    public ImagesView(PApplet p, Util util) {
-        this.p = p;
-        this.util = util;
-    }
+    private List<PImage> images = List.of();
 
     @Override
     public void show() {

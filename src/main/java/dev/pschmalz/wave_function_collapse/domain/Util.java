@@ -1,11 +1,14 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
-import static java.util.function.IntUnaryOperator.identity;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.function.IntUnaryOperator;
 import java.util.function.UnaryOperator;
 
+import static java.util.function.IntUnaryOperator.identity;
+
+@Component
 public class Util {
     public static DirectedConstraintBuilder give(Constraint constraint) {
         return new DirectedConstraintBuilder(constraint);

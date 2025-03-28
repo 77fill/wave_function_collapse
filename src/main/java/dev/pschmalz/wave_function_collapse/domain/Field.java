@@ -1,6 +1,5 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

@@ -1,15 +1,9 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
-import static dev.pschmalz.wave_function_collapse.domain.Util.give;
-import static dev.pschmalz.wave_function_collapse.domain.Util.toBottom;
-import static dev.pschmalz.wave_function_collapse.domain.Util.toLeft;
-import static dev.pschmalz.wave_function_collapse.domain.Util.toRight;
-import static dev.pschmalz.wave_function_collapse.domain.Util.toTop;
-import static dev.pschmalz.wave_function_collapse.domain.Util.self;
-
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.function.Function;
+
+import static dev.pschmalz.wave_function_collapse.domain.Util.*;
 
 public interface DirectedConstraint extends BiFunction<Field,Field, Optional<Constraint>> {
     @Override

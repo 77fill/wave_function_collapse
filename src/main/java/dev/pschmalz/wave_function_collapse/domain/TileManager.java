@@ -1,10 +1,13 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.io.File;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+@Component
 public class TileManager {
     private Set<Tile> tiles;
 

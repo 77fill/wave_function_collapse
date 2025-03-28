@@ -7,15 +7,15 @@ import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
 import dev.pschmalz.wave_function_collapse.usecase.LoadResources_IntoTempDirectory;
 import dev.pschmalz.wave_function_collapse.usecase.ShowTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
+import org.springframework.stereotype.Component;
 import processing.core.PApplet;
 
 import java.io.File;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.stream.Stream;
 
+@Component
 public class MainPApplet extends PApplet implements View {
-    private Queue<Runnable> eventQueue;
     private LoadResources_IntoTempDirectory loadResources_intoTempDirectory;
     private ChooseTileImages_CreateTiles chooseTileImages_createTiles;
     private GenerateTileConstraints generateTileConstraints;
@@ -23,13 +23,12 @@ public class MainPApplet extends PApplet implements View {
     private Optional<SubView> toBeShown;
     private ImagesView imagesView;
 
-    public MainPApplet(Queue<Runnable> eventQueue, LoadResources_IntoTempDirectory loadResources_intoTempDirectory, ChooseTileImages_CreateTiles chooseTileImages_createTiles, ShowTileImages showTileImages, GenerateTileConstraints generateTileConstraints) {
-        this.eventQueue = eventQueue;
+    public MainPApplet(LoadResources_IntoTempDirectory loadResources_intoTempDirectory, ChooseTileImages_CreateTiles chooseTileImages_createTiles, ShowTileImages showTileImages, GenerateTileConstraints generateTileConstraints, ImagesView imagesView) {
         this.loadResources_intoTempDirectory = loadResources_intoTempDirectory;
         this.chooseTileImages_createTiles = chooseTileImages_createTiles;
         this.showTileImages = showTileImages;
         this.generateTileConstraints = generateTileConstraints;
-        this.imagesView = new ImagesView(this, new Util());
+        this.imagesView = imagesView;
     }
 
     @Override
@@ -46,8 +45,6 @@ public class MainPApplet extends PApplet implements View {
     @Override
     public void draw() {
         toBeShown.ifPresent(SubView::show);
-
-        eventQueue.forEach(Runnable::run);
     }
 
     @Override

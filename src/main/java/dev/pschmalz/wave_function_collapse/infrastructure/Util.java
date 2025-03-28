@@ -7,6 +7,7 @@ import org.apache.commons.lang3.function.FailablePredicate;
 import org.apache.commons.lang3.stream.Streams;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,9 +19,9 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+@Component
 public class Util {
     public String getName(ClassPath.ResourceInfo resourceInfo) {
         return resourceInfo.getResourceName();

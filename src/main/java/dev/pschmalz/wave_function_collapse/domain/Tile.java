@@ -1,7 +1,5 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
-import com.google.common.base.Predicates;
-
 import java.io.File;
 import java.util.Optional;
 import java.util.Set;

@@ -1,9 +1,10 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Optional;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
+@Component
 public class FieldManager {
     private Field[][] fields;
 
