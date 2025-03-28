@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.config;
 
+import dev.pschmalz.wave_function_collapse.infrastructure.view.DisplayExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,7 +11,7 @@ import java.util.concurrent.Executors;
 public class AsyncConfig {
     @Bean
     public Executor display() {
-        return Executors.newSingleThreadExecutor();
+        return new DisplayExecutor();
     }
 
     @Bean

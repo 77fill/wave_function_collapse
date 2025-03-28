@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
+import dev.pschmalz.wave_function_collapse.infrastructure.view.DisplayExecutor;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.ImagesView;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.SubView;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages_CreateTiles;
@@ -22,13 +23,15 @@ public class MainPApplet extends PApplet implements View {
     private ShowTileImages showTileImages;
     private Optional<SubView> toBeShown;
     private ImagesView imagesView;
+    private DisplayExecutor displayExecutor;
 
-    public MainPApplet(LoadResources_IntoTempDirectory loadResources_intoTempDirectory, ChooseTileImages_CreateTiles chooseTileImages_createTiles, ShowTileImages showTileImages, GenerateTileConstraints generateTileConstraints, ImagesView imagesView) {
+    public MainPApplet(LoadResources_IntoTempDirectory loadResources_intoTempDirectory, ChooseTileImages_CreateTiles chooseTileImages_createTiles, ShowTileImages showTileImages, GenerateTileConstraints generateTileConstraints, ImagesView imagesView, DisplayExecutor displayExecutor) {
         this.loadResources_intoTempDirectory = loadResources_intoTempDirectory;
         this.chooseTileImages_createTiles = chooseTileImages_createTiles;
         this.showTileImages = showTileImages;
         this.generateTileConstraints = generateTileConstraints;
         this.imagesView = imagesView;
+        this.displayExecutor = displayExecutor;
     }
 
     @Override
@@ -45,6 +48,8 @@ public class MainPApplet extends PApplet implements View {
     @Override
     public void draw() {
         toBeShown.ifPresent(SubView::show);
+
+        displayExecutor.runCommands();
     }
 
     @Override
