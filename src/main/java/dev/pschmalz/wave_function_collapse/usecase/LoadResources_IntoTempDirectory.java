@@ -13,11 +13,16 @@ public class LoadResources_IntoTempDirectory {
     private View view;
 
     @Async("background")
-    private void execute(View view) throws IOException {
+    public void execute(View view) {
         this.view = view;
 
         if(tempDir.unavailable())
-            tempDir.create();
+            try {
+                tempDir.create();
+            } catch (IOException e) {
+
+            }
+
 
         resources.all().forEach(tempDir::insert);
 
