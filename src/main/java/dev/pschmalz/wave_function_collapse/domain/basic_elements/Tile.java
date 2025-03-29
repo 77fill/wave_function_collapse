@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotDirection.from;
 
@@ -20,6 +21,10 @@ public class Tile {
 
     public File getImage() {
         return image;
+    }
+
+    public static Predicate<Tile> doesNotFulfill(Constraint constraint) {
+        return tile -> !constraint.isFulfilledBy(tile);
     }
 
     public Optional<Constraint> getConstraintFor(TileSlotDirection pair) {

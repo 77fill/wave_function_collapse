@@ -15,4 +15,5 @@ public interface Constraint extends Predicate<Tile> {
     }
 
     BinaryOperator<Constraint> and = (a, b) ->  a.and(b)::test;
+    BinaryOperator<Constraint> or = (a, b) -> a.or(b)::test;
 }
