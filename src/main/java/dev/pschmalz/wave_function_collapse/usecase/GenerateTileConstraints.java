@@ -1,13 +1,13 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import dev.pschmalz.wave_function_collapse.domain.TileManager;
+import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSet;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GenerateTileConstraints {
-    private TileManager tiles;
+    private TileSet tiles;
     private View view;
 
     @Async("background")
@@ -21,7 +21,7 @@ public class GenerateTileConstraints {
         view.restraintsGenerated();
     }
 
-    public GenerateTileConstraints(TileManager tiles) {
+    public GenerateTileConstraints(TileSet tiles) {
         this.tiles = tiles;
     }
 }

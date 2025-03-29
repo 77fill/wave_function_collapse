@@ -1,6 +1,6 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import dev.pschmalz.wave_function_collapse.domain.TileManager;
+import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSet;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystem_TempDirectory;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import org.springframework.scheduling.annotation.Async;
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @Component
 public class ChooseTileImages_CreateTiles {
     private FileSystem_TempDirectory tempDir;
-    private TileManager tiles;
+    private TileSet tiles;
     private JFileChooser chooser;
     private Util util;
     private View view;
@@ -42,7 +42,7 @@ public class ChooseTileImages_CreateTiles {
         view.tilesLoaded();
     }
 
-    public ChooseTileImages_CreateTiles(FileSystem_TempDirectory tempDir, TileManager tiles, Util util,Executor background, Executor display) {
+    public ChooseTileImages_CreateTiles(FileSystem_TempDirectory tempDir, TileSet tiles, Util util, Executor background, Executor display) {
         this.tempDir = tempDir;
         this.tiles = tiles;
         this.chooser = new JFileChooser();

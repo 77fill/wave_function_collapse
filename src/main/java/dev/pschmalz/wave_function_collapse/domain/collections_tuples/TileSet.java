@@ -1,5 +1,6 @@
-package dev.pschmalz.wave_function_collapse.domain;
+package dev.pschmalz.wave_function_collapse.domain.collections_tuples;
 
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -8,7 +9,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Component
-public class TileManager {
+public class TileSet {
     private Set<Tile> tiles;
 
     public void add(File image) {
