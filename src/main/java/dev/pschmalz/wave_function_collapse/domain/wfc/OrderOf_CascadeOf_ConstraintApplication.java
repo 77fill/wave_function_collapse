@@ -8,17 +8,17 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class ConstraintApplicationCascadeOrder implements Comparator<TileSlot> {
+public class OrderOf_CascadeOf_ConstraintApplication implements Comparator<TileSlot> {
     private TileSlot firstSlot;
     private List<TileSlot> orderedTileSlots;
     private int indexOf(TileSlot tileSlot) {return orderedTileSlots.indexOf(tileSlot);}
     private Function<TileSlot, Stream<TileSlot>> getConstraintTargets;
 
-    public static ConstraintApplicationCascadeOrder startingFrom(TileSlot firstSlot) {
-        return new ConstraintApplicationCascadeOrder(firstSlot);
+    public static OrderOf_CascadeOf_ConstraintApplication startingFrom(TileSlot firstSlot) {
+        return new OrderOf_CascadeOf_ConstraintApplication(firstSlot);
     }
 
-    private ConstraintApplicationCascadeOrder(TileSlot firstSlot) {
+    private OrderOf_CascadeOf_ConstraintApplication(TileSlot firstSlot) {
         this.firstSlot = firstSlot;
         this.getConstraintTargets = TileSlot::getNeighbors;
         this.orderedTileSlots = new ArrayList<>(firstSlot.getGrid().size());

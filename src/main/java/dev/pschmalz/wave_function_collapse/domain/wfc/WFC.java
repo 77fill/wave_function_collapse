@@ -27,7 +27,7 @@ public class WFC {
         var collapsedSlot = grid.getTileSlot_withLeastPossibilities().get().randomCollapse();
 
         grid.tileSlots()
-                .sorted(ConstraintApplicationCascadeOrder.startingFrom(collapsedSlot))
+                .sorted(OrderOf_CascadeOf_ConstraintApplication.startingFrom(collapsedSlot))
                 .forEach(TileSlot::applyConstraintsOnTargets);
 
 
