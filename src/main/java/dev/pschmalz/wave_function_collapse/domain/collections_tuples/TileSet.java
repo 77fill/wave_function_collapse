@@ -12,6 +12,10 @@ import java.util.stream.Stream;
 public class TileSet {
     private Set<Tile> tiles;
 
+    public Set<Tile> getSet() {
+        return tiles;
+    }
+
     public void add(File image) {
         tiles.add(new Tile(image));
     }

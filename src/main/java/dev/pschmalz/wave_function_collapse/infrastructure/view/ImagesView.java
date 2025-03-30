@@ -95,4 +95,8 @@ public class ImagesView implements SubView {
     public void set(Stream<PImage> images) {
         this.images = ImmutableList.copyOf(images.toList());
     }
+
+    public void setDistanceBetween(int distance) {
+        distanceBetween = distance;
+    }
 }

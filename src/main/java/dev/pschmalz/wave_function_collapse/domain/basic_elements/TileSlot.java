@@ -80,4 +80,15 @@ public class TileSlot implements Comparable<TileSlot> {
     public boolean hasNoPossibilities() {
         return possibleTiles.isEmpty();
     }
+
+    public Optional<Tile> getTile() {
+        if(isSuperposition())
+            return Optional.empty();
+
+        return possibleTiles.stream().findFirst();
+    }
+
+    public void initialize() {
+        possibleTiles = tileSlotGrid.getTileSet();
+    }
 }

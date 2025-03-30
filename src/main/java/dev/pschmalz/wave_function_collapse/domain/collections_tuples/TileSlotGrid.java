@@ -1,13 +1,18 @@
 package dev.pschmalz.wave_function_collapse.domain.collections_tuples;
 
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @Component
 public class TileSlotGrid {
+    @Autowired
+    private TileSet tileSet;
     private TileSlot[][] tileSlots;
     private boolean initialized = false;
 
@@ -52,5 +57,16 @@ public class TileSlotGrid {
 
     public boolean isDeadEnd() {
         return tileSlots().anyMatch(TileSlot::hasNoPossibilities);
+    }
+
+    public Set<Tile> getTileSet() {
+        return tileSet.getSet();
+    }
+
+    public void initialize() {
+
+        tileSlots().forEach(TileSlot::initialize);
+
+        initialized = true;
     }
 }

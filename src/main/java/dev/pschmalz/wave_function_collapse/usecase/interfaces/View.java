@@ -13,4 +13,6 @@ public interface View {
     void showImages(Stream<File> images);
 
     void restraintsGenerated();
+
+    void finishedWFC();
 }

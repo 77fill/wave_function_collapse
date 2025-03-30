@@ -3,11 +3,9 @@ package dev.pschmalz.wave_function_collapse.infrastructure;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.DisplayExecutor;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.ImagesView;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.SubView;
-import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages_CreateTiles;
-import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
-import dev.pschmalz.wave_function_collapse.usecase.LoadResources_IntoTempDirectory;
-import dev.pschmalz.wave_function_collapse.usecase.ShowTileImages;
+import dev.pschmalz.wave_function_collapse.usecase.*;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import processing.core.PApplet;
 
@@ -24,6 +22,13 @@ public class MainPApplet extends PApplet implements View {
     private Optional<SubView> toBeShown;
     private ImagesView imagesView;
     private DisplayExecutor displayExecutor;
+
+    @Autowired
+    private Images images;
+    @Autowired
+    private ShowTileSlotGrid showTileSlotGrid;
+    @Autowired
+    private WaveFunctionCollapse waveFunctionCollapse;
 
     public MainPApplet(LoadResources_IntoTempDirectory loadResources_intoTempDirectory, ChooseTileImages_CreateTiles chooseTileImages_createTiles, ShowTileImages showTileImages, GenerateTileConstraints generateTileConstraints, ImagesView imagesView, DisplayExecutor displayExecutor) {
         this.loadResources_intoTempDirectory = loadResources_intoTempDirectory;
@@ -67,16 +72,21 @@ public class MainPApplet extends PApplet implements View {
     public void showImages(Stream<File> images) {
         imagesView.clear();
         imagesView.set(
-                images
-                        .map(File::toString)
-                        .map(this::loadImage)
+                images.map(this.images::get)
+                        .peek(i -> {if(i.isEmpty()) throw new IllegalStateException();})
+                        .map(Optional::get)
         );
         toBeShown = Optional.of(imagesView);
     }
 
     @Override
     public void restraintsGenerated() {
+        waveFunctionCollapse.run();
+    }
 
+    @Override
+    public void finishedWFC() {
+        showTileSlotGrid.run();
     }
 
     @Override
