@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import dev.pschmalz.wave_function_collapse.usecase.data.CustomResource;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ResourceStore;
+import jakarta.annotation.PreDestroy;
 import org.apache.commons.lang3.function.FailableFunction;
 import org.apache.commons.lang3.function.FailablePredicate;
 import org.apache.commons.lang3.stream.Streams;
@@ -13,20 +14,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.Closeable;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
 @Component
-public class ResourceStoreImpl implements ResourceStore {
+public class ResourceStoreImpl implements ResourceStore, Closeable {
     @Autowired
     private ClassPath classPath;
     @Value("${infrastructure.contained-resources.choose-file-name-suffixes}")
     private List<String> allowedNameSuffixes;
     @Autowired
     private UtilInfrastructure util;
+    private Collection<Closeable> toBeClosed = new ArrayList<>();
 
     @Override
     public Streams.FailableStream<CustomResource> all() {
@@ -78,5 +82,12 @@ public class ResourceStoreImpl implements ResourceStore {
                 resourceInfo.getResourceName()
                         .split("[/\\\\]")
         );
+    }
+
+    @Override
+    @PreDestroy
+    public void close() throws IOException {
+        Streams.failableStream(toBeClosed)
+                .forEach(Closeable::close);
     }
 }
