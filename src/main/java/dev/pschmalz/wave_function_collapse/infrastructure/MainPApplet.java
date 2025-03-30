@@ -15,12 +15,18 @@ import java.util.stream.Stream;
 
 @Component
 public class MainPApplet extends PApplet implements View {
+    @Autowired
     private LoadResources_IntoTempDirectory loadResources_intoTempDirectory;
+    @Autowired
     private ChooseTileImages_CreateTiles chooseTileImages_createTiles;
+    @Autowired
     private GenerateTileConstraints generateTileConstraints;
+    @Autowired
     private ShowTileImages showTileImages;
     private Optional<SubView> toBeShown;
+    @Autowired
     private ImagesView imagesView;
+    @Autowired
     private DisplayExecutor displayExecutor;
 
     @Autowired
@@ -29,15 +35,6 @@ public class MainPApplet extends PApplet implements View {
     private ShowTileSlotGrid showTileSlotGrid;
     @Autowired
     private WaveFunctionCollapse waveFunctionCollapse;
-
-    public MainPApplet(LoadResources_IntoTempDirectory loadResources_intoTempDirectory, ChooseTileImages_CreateTiles chooseTileImages_createTiles, ShowTileImages showTileImages, GenerateTileConstraints generateTileConstraints, ImagesView imagesView, DisplayExecutor displayExecutor) {
-        this.loadResources_intoTempDirectory = loadResources_intoTempDirectory;
-        this.chooseTileImages_createTiles = chooseTileImages_createTiles;
-        this.showTileImages = showTileImages;
-        this.generateTileConstraints = generateTileConstraints;
-        this.imagesView = imagesView;
-        this.displayExecutor = displayExecutor;
-    }
 
     @Override
     public void settings() {
