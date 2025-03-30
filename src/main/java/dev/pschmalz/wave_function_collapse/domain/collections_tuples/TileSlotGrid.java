@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -13,6 +14,8 @@ import java.util.stream.Stream;
 public class TileSlotGrid {
     @Autowired
     private TileSet tileSet;
+    @Autowired
+    private Random random;
     private TileSlot[][] tileSlots;
     private boolean initialized = false;
 
@@ -68,5 +71,9 @@ public class TileSlotGrid {
         tileSlots().forEach(TileSlot::initialize);
 
         initialized = true;
+    }
+
+    public Random getRandom() {
+        return random;
     }
 }

@@ -30,4 +30,8 @@ public class History {
         tileSlots = Optional.of(currentTileSlotsCopy);
     }
 
+    public void clear() {
+        tileSlots = Optional.empty();
+    }
+
 }

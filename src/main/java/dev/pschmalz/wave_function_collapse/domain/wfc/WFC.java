@@ -19,6 +19,7 @@ public class WFC {
         while (grid.hasSuperposition()) {
             timeLoop.do_(this::step)
                     .while_(grid::isDeadEnd)
+                    .maxRepeat(20)
                     .start();
         }
     }

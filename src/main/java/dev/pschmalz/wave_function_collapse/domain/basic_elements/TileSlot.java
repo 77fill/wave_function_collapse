@@ -29,8 +29,12 @@ public class TileSlot implements Comparable<TileSlot> {
         return possibleTiles.size();
     }
 
+    private int randomTileIndex() {
+        return tileSlotGrid.getRandom().ints(0,possibleTiles.size()).findFirst().getAsInt();
+    }
+
     public TileSlot randomCollapse() {
-        var chosen = (Tile) possibleTiles.toArray()[possibleTiles.size()-1];
+        var chosen = (Tile) possibleTiles.toArray()[randomTileIndex()];
         possibleTiles.clear();
         possibleTiles.add(chosen);
         return this;
