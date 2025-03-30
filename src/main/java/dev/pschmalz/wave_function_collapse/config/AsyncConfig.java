@@ -14,7 +14,7 @@ public class AsyncConfig {
     private Integer backgroundThreadCount;
 
     @Bean
-    public Executor display() {
+    public DisplayExecutor display() {
         return new DisplayExecutor();
     }
 
