@@ -90,4 +90,8 @@ public class ResourceStoreImpl implements ResourceStore, Closeable {
         Streams.failableStream(toBeClosed)
                 .forEach(Closeable::close);
     }
+
+    public void addCloseable(Closeable closeable) {
+        toBeClosed.add(closeable);
+    }
 }

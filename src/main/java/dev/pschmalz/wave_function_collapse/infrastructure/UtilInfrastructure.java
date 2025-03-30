@@ -1,12 +1,14 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
 import com.google.common.reflect.ClassPath;
+import dev.pschmalz.wave_function_collapse.usecase.interfaces.ResourceStore;
 import org.apache.commons.lang3.function.FailableConsumer;
 import org.apache.commons.lang3.function.FailableFunction;
 import org.apache.commons.lang3.function.FailablePredicate;
 import org.apache.commons.lang3.stream.Streams;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,6 +22,9 @@ import java.util.stream.Stream;
 
 @Component
 public class UtilInfrastructure {
+    @Autowired
+    private ResourceStoreImpl resources;
+
     public String getName(ClassPath.ResourceInfo resourceInfo) {
         return resourceInfo.getResourceName();
     }
@@ -35,7 +40,11 @@ public class UtilInfrastructure {
     }
 
     public InputStream getContent(ClassPath.ResourceInfo resourceInfo) throws IOException {
-        return resourceInfo.asByteSource().openBufferedStream();
+        var instream = resourceInfo.asByteSource().openBufferedStream();
+
+        resources.addCloseable(instream);
+
+        return instream;
     }
 
     public <T> ExtendedStream<T> extendedStream(Collection<T> items) {
