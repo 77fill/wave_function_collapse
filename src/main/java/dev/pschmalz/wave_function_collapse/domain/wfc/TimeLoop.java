@@ -3,12 +3,14 @@ package dev.pschmalz.wave_function_collapse.domain.wfc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Time;
 import java.util.function.BooleanSupplier;
 
 @Component
 public class TimeLoop {
     private Runnable doSomething;
     private BooleanSupplier whileSomething;
+    private int maxRepeat;
     @Autowired
     private History history;
 
@@ -22,12 +24,24 @@ public class TimeLoop {
         return this;
     }
 
+    public TimeLoop maxRepeat(int maxRepeat) {
+        this.maxRepeat = maxRepeat;
+        return this;
+    }
+
     public void start() {
+        int currentRepetition = 0;
+
         do {
             history.restoreIfExists();
             doSomething.run();
         }
-        while (whileSomething.getAsBoolean());
+        while (whileSomething.getAsBoolean()
+                && currentRepetition++ < maxRepeat);
+
+        if(currentRepetition >= maxRepeat)
+            throw new IllegalStateException();
+
         history.update();
     }
 }
