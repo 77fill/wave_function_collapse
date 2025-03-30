@@ -47,7 +47,7 @@ public class MainPApplet extends PApplet implements View {
 
     @Override
     public void setup() {
-        loadResources_intoTempDirectory.execute(this);
+        loadResources_intoTempDirectory.run();
     }
 
     @Override
@@ -59,12 +59,12 @@ public class MainPApplet extends PApplet implements View {
 
     @Override
     public void tempDirectoryLoaded() {
-        chooseTileImages_createTiles.execute(this);
+        chooseTileImages_createTiles.run();
     }
 
     @Override
     public void tilesLoaded() {
-        showTileImages.execute(this);
+        showTileImages.run();
         //generateTileRestraints.execute(this);
     }
 
