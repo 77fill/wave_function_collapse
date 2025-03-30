@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 @Component
-public class Util {
+public class UtilUsecase {
     Stream<File> getSelectedFiles(JFileChooser chooser) {
         return Arrays.stream(chooser.getSelectedFiles());
     }

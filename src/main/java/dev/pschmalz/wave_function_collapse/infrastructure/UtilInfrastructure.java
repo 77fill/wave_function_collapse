@@ -22,7 +22,7 @@ import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 @Component
-public class Util {
+public class UtilInfrastructure {
     public String getName(ClassPath.ResourceInfo resourceInfo) {
         return resourceInfo.getResourceName();
     }

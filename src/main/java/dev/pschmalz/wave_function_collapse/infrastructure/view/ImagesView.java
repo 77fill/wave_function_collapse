@@ -2,7 +2,7 @@ package dev.pschmalz.wave_function_collapse.infrastructure.view;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
-import dev.pschmalz.wave_function_collapse.infrastructure.Util;
+import dev.pschmalz.wave_function_collapse.infrastructure.UtilInfrastructure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import processing.core.PApplet;
@@ -20,7 +20,7 @@ public class ImagesView implements SubView {
     private int size = 30;
 
     @Autowired
-    private Util util;
+    private UtilInfrastructure util;
 
     @Autowired
     private PApplet p;

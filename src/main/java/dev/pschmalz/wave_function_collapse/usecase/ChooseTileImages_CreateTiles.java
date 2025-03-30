@@ -16,7 +16,7 @@ public class ChooseTileImages_CreateTiles {
     private FileSystem_TempDirectory tempDir;
     private TileSet tiles;
     private JFileChooser chooser;
-    private Util util;
+    private UtilUsecase util;
     private View view;
 
     @Async("background")
@@ -42,7 +42,7 @@ public class ChooseTileImages_CreateTiles {
         view.tilesLoaded();
     }
 
-    public ChooseTileImages_CreateTiles(FileSystem_TempDirectory tempDir, TileSet tiles, Util util, Executor background, Executor display) {
+    public ChooseTileImages_CreateTiles(FileSystem_TempDirectory tempDir, TileSet tiles, UtilUsecase util, Executor background, Executor display) {
         this.tempDir = tempDir;
         this.tiles = tiles;
         this.chooser = new JFileChooser();

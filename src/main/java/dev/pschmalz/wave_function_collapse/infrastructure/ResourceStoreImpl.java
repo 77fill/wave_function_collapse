@@ -17,11 +17,11 @@ import java.util.stream.Stream;
 public class ResourceStoreImpl implements ResourceStore {
     private ClassPath classPath;
     private ImmutableSet<String> allowedNameSuffixes;
-    private Util util;
+    private UtilInfrastructure util;
 
     private ResourceStoreImpl() throws IOException {
         classPath = ClassPath.from(ClassLoader.getPlatformClassLoader());
-        util = new Util();
+        util = new UtilInfrastructure();
     }
 
     public static ResourceStoreImpl withAllowedFileNameSuffixes(Collection<String> suffixes) throws IOException {
