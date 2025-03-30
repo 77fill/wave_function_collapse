@@ -1,6 +1,5 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import com.google.common.base.Throwables;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;

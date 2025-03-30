@@ -2,17 +2,18 @@ package dev.pschmalz.wave_function_collapse.domain.wfc;
 
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
-import org.springframework.beans.factory.annotation.Autowired;
+import dev.pschmalz.wave_function_collapse.domain.workers.ModelSynthesis;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WFC {
-    @Autowired
+public class WFC implements ModelSynthesis {
     private TileSlotGrid grid;
-    @Autowired
-    private TimeLoop timeLoop;
+    private TimeLoop timeLoop = new TimeLoop();
 
-    public void collapse() {
+    @Override
+    public void accept(TileSlotGrid grid) {
+        this.grid = grid;
+
         if(!grid.isInitialized())
             throw new IllegalStateException("tileSlotGrid is not initialized!");
 

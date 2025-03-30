@@ -1,9 +1,7 @@
 package dev.pschmalz.wave_function_collapse;
 
-import dev.pschmalz.wave_function_collapse.config.ViewStartStop;
 import dev.pschmalz.wave_function_collapse.config.YamlPropertySourceFactory;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.DisplayExecutor;
-import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

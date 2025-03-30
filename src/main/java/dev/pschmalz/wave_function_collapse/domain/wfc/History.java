@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.function.BooleanSupplier;
 
 @Component
 public class History {

@@ -3,7 +3,6 @@ package dev.pschmalz.wave_function_collapse.domain.wfc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Time;
 import java.util.function.BooleanSupplier;
 
 @Component

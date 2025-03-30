@@ -1,6 +1,5 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
-import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
 import dev.pschmalz.wave_function_collapse.usecase.data.CustomResource;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ResourceStore;

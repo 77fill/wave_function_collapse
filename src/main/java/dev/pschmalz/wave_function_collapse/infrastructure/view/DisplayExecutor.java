@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DisplayExecutor implements ExecutorService {
     private Queue<Runnable> commands = new ConcurrentLinkedQueue<>();

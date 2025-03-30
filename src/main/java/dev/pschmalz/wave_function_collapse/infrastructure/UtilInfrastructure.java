@@ -1,7 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
 import com.google.common.reflect.ClassPath;
-import dev.pschmalz.wave_function_collapse.usecase.interfaces.ResourceStore;
 import org.apache.commons.lang3.function.FailableConsumer;
 import org.apache.commons.lang3.function.FailableFunction;
 import org.apache.commons.lang3.function.FailablePredicate;
