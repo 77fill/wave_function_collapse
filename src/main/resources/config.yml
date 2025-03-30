@@ -1,6 +1,7 @@
 infrastructure:
   contained-resources:
-    choose-file-name-suffixes: png
+    choose-file-name-suffixes:
+      - png
 multithreading:
   background:
     thread-count: 3
