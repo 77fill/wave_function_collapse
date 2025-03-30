@@ -15,7 +15,6 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         var appContext = new AnnotationConfigApplicationContext(Main.class);
-        appContext.refresh();
         appContext.start();
     }
 }
