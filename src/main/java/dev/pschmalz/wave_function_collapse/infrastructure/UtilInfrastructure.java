@@ -14,10 +14,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
@@ -62,6 +59,10 @@ public class UtilInfrastructure {
                             com.google.common.collect.Streams.mapWithIndex(stream.stream(),mapper)
                     )
             );
+        }
+
+        public ExtendedStream<T> peek(Consumer<T> consumer) {
+            return new ExtendedStream<>(Streams.failableStream(stream.stream().peek(consumer)));
         }
 
         public <U,V, R,S> ExtendedStream<Pair<R,S>> mapPair(FailableFunction<U, R, ?> mapperLeft, FailableFunction<V, S, ?> mapperRight) {

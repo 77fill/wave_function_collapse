@@ -2,6 +2,7 @@ package dev.pschmalz.wave_function_collapse.infrastructure;
 
 import dev.pschmalz.wave_function_collapse.usecase.data.CustomResource;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystem_TempDirectory;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -15,7 +16,7 @@ import static java.nio.file.Files.notExists;
 
 @Component
 public class FileSystem_TempDirectoryImpl implements FileSystem_TempDirectory {
-    private Optional<Path> tempDir;
+    private Optional<Path> tempDir = Optional.empty();
 
     @Override
     public Optional<Path> getPath() {
@@ -34,19 +35,22 @@ public class FileSystem_TempDirectoryImpl implements FileSystem_TempDirectory {
     }
 
     @Override
+    @PostConstruct
     public void create() throws IOException {
-        Files.createTempDirectory(null);
+        tempDir = Optional.of(Files.createTempDirectory(null));
     }
 
     @Override
     public void insert(CustomResource resource) throws IOException {
         if(unavailable()) throw new IOException("tempDir can't be accessed");
 
-        var target = tempDir.get().resolve(resource.relativePath());
+        var target = tempDir.get().resolve(resource.getFileName());
 
         Files.copy(
                 resource.content(),
                 target);
+
+        System.out.printf("resource copied. target: %s%n", target);
     }
 
     private void delete() throws IOException {

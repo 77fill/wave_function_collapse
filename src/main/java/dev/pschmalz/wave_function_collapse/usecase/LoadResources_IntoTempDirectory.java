@@ -25,7 +25,7 @@ public class LoadResources_IntoTempDirectory {
             try {
                 tempDir.create();
             } catch (IOException e) {
-
+                throw new IllegalStateException(e);
             }
 
 

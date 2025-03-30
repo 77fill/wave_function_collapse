@@ -9,36 +9,34 @@ import org.apache.commons.lang3.function.FailablePredicate;
 import org.apache.commons.lang3.stream.Streams;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
+@Component
 public class ResourceStoreImpl implements ResourceStore {
+    @Autowired
     private ClassPath classPath;
-    private ImmutableSet<String> allowedNameSuffixes;
+    @Value("${infrastructure.contained-resources.choose-file-name-suffixes}")
+    private List<String> allowedNameSuffixes;
+    @Autowired
     private UtilInfrastructure util;
-
-    private ResourceStoreImpl() throws IOException {
-        classPath = ClassPath.from(ClassLoader.getPlatformClassLoader());
-        util = new UtilInfrastructure();
-    }
-
-    public static ResourceStoreImpl withAllowedFileNameSuffixes(Collection<String> suffixes) throws IOException {
-        var resources = new ResourceStoreImpl();
-
-        resources.allowedNameSuffixes = ImmutableSet.copyOf(suffixes);
-
-        return resources;
-    }
 
     @Override
     public Streams.FailableStream<CustomResource> all() {
+        System.out.println("suffixes:"+allowedNameSuffixes.toString());
         return util.extendedStream(
                     classPath
                 )
 
                 .flatMap(ClassPath::getResources)
+                .filter(isInside("dev.pschmalz.wave_function_collapse"))
                 .filter(nameSuffixIn(allowedNameSuffixes))
                 .duplicateIntoPair()
                 .mapPair(util::getName, util::getContent)
@@ -62,5 +60,23 @@ public class ResourceStoreImpl implements ResourceStore {
 
                 .findFirst()
                 .get();
+    }
+
+    private FailablePredicate<ClassPath.ResourceInfo,?> isInside(String packageName) {
+        var packageNameSegments = Arrays.asList(packageName.split("\\."));
+
+        return resourceInfo -> {
+            var segments = resourceNameSegments(resourceInfo);
+            return segments.subList(
+                    0, Math.min(segments.size(),packageNameSegments.size())
+            ).equals(packageNameSegments);
+        };
+    }
+
+    private List<String> resourceNameSegments(ClassPath.ResourceInfo resourceInfo) {
+        return Arrays.asList(
+                resourceInfo.getResourceName()
+                        .split("[/\\\\]")
+        );
     }
 }

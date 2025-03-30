@@ -11,4 +11,10 @@ public record CustomResource(String relativePath, InputStream content) {
                 config.getRight()
         );
     }
+
+    public String getFileName() {
+        var segments = relativePath.split("[/\\\\]");
+
+        return segments[segments.length-1];
+    }
 }

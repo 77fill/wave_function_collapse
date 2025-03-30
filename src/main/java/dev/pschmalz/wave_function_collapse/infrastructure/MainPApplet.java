@@ -23,7 +23,7 @@ public class MainPApplet extends PApplet implements View {
     private GenerateTileConstraints generateTileConstraints;
     @Autowired
     private ShowTileImages showTileImages;
-    private Optional<SubView> toBeShown;
+    private Optional<SubView> toBeShown = Optional.empty();
     @Autowired
     private ImagesView imagesView;
     @Autowired

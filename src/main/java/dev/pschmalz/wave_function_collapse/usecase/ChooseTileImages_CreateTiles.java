@@ -17,7 +17,8 @@ public class ChooseTileImages_CreateTiles {
     private FileSystem_TempDirectory tempDir;
     @Autowired
     private TileSet tiles;
-    private JFileChooser chooser;
+    @Autowired
+    private JFileChooser fileChooser;
     @Autowired
     private UtilUsecase util;
     @Autowired
@@ -28,12 +29,12 @@ public class ChooseTileImages_CreateTiles {
 
         tempDir.getPath()
                 .map(Path::toFile)
-                .ifPresent(chooser::setCurrentDirectory);
+                .ifPresent(fileChooser::setCurrentDirectory);
 
-        var buttonOption = chooser.showOpenDialog(null);
+        var buttonOption = fileChooser.showOpenDialog(null);
 
         if(buttonOption == JFileChooser.APPROVE_OPTION)
-            Stream.of(chooser)
+            Stream.of(fileChooser)
                     .flatMap(util::getSelectedFiles)
                     .forEach(tiles::add);
 
