@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Image;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
@@ -29,6 +30,7 @@ public class ShowTileSlotGrid {
                             .peek(tile -> {if(tile.isEmpty()) throw new IllegalStateException();})
                             .map(Optional::get)
                             .map(Tile::getImage)
+                            .map(Image::getFile)
         );
     }
 }

@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.domain.wfc;
+package dev.pschmalz.wave_function_collapse.domain_workers.wfc;
 
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 

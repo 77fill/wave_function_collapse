@@ -12,14 +12,14 @@ import java.util.function.Predicate;
 import static dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotDirection.from;
 
 public class Tile {
-    private File image;
+    private Image image;
     private Set<FromTileSlotDirection_ToConstraint> conditionalConstraints;
 
-    public Tile(File image) {
+    public Tile(Image image) {
         this.image = image;
     }
 
-    public File getImage() {
+    public Image getImage() {
         return image;
     }
 
@@ -39,4 +39,7 @@ public class Tile {
         return conditionalConstraint -> conditionalConstraint.getConstraintFor(from(origin).to(target));
     }
 
+    public void setConditionalConstraints(Set<FromTileSlotDirection_ToConstraint> conditionalConstraints) {
+        this.conditionalConstraints = conditionalConstraints;
+    }
 }

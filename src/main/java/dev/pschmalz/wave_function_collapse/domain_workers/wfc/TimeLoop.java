@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.domain.wfc;
+package dev.pschmalz.wave_function_collapse.domain_workers.wfc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Image;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSet;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
@@ -17,6 +18,6 @@ public class ShowTileImages {
     @Async("display")
     public void run() {
         view.clear();
-        view.showImages(tiles.map(Tile::getImage));
+        view.showImages(tiles.map(Tile::getImage).map(Image::getFile));
     }
 }
