@@ -1,11 +1,7 @@
 package dev.pschmalz.wave_function_collapse.config;
 
-import dev.pschmalz.wave_function_collapse.domain.ConstraintAppender;
-import dev.pschmalz.wave_function_collapse.domain.MemoryTileStore;
-import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
-import dev.pschmalz.wave_function_collapse.usecase.InitTempDirectory;
-import dev.pschmalz.wave_function_collapse.usecase.LoadChosenTileImages;
-import dev.pschmalz.wave_function_collapse.usecase.ShowTileImages;
+import dev.pschmalz.wave_function_collapse.domain.*;
+import dev.pschmalz.wave_function_collapse.usecase.*;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
@@ -33,6 +29,12 @@ public class UsecaseConfig {
     private View view;
     @Autowired
     private ConstraintAppender constraintAppender;
+    @Autowired
+    private TileSlotGridGenerator tileSlotGridGenerator;
+    @Autowired
+    private ConstraintApplicationCascade constraintApplicationCascade;
+    @Autowired
+    private MemoryGridStore gridStore;
 
     @Bean
     public LoadChosenTileImages loadChosenTileImages() {
@@ -52,5 +54,10 @@ public class UsecaseConfig {
     @Bean
     public GenerateTileConstraints generateTileConstraints() {
         return new GenerateTileConstraints(usecaseEventEmitter, tileStore, constraintAppender);
+    }
+
+    @Bean
+    public WaveFunctionCollapse waveFunctionCollapse() {
+        return new WaveFunctionCollapse(usecaseEventEmitter, tileStore, tileSlotGridGenerator, constraintApplicationCascade, gridStore);
     }
 }

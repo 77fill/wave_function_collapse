@@ -1,30 +1,46 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
-import dev.pschmalz.wave_function_collapse.domain.workers.ModelSynthesis;
-import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+import dev.pschmalz.wave_function_collapse.domain.ConstraintApplicationCascade;
+import dev.pschmalz.wave_function_collapse.domain.MemoryGridStore;
+import dev.pschmalz.wave_function_collapse.domain.MemoryTileStore;
+import dev.pschmalz.wave_function_collapse.domain.TileSlotGridGenerator;
+import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
+import reactor.core.Disposable;
 
-@Component
-public class WaveFunctionCollapse {
-    @Autowired
-    private ModelSynthesis modelSynthesis;
-    @Autowired
-    private TileSlotGrid grid;
-    @Autowired
-    private View view;
+import java.util.function.Consumer;
 
-    @Async("background")
-    public void run() {
-        grid.initialize();
-        modelSynthesis.accept(grid);
-        finishedWFC();
+public class WaveFunctionCollapse extends Usecase {
+    private final MemoryTileStore tileStore;
+    private final TileSlotGridGenerator tileSlotGridGenerator;
+    private final ConstraintApplicationCascade constraintApplicationCascade;
+    private final MemoryGridStore gridStore;
+
+    @Override
+    protected void handleRun() {
+        disposable =
+        tileStore
+                .getTiles()
+                .transform(tileSlotGridGenerator.allPossibilities(30,30))
+                .map(constraintApplicationCascade)
+                .subscribe(
+                        gridStore::set,
+                        this::onException,
+                        this::onSuccess
+                );
     }
 
-    @Async("display")
-    private void finishedWFC() {
-        view.finishedWFC();
+    @Override
+    protected void handleCancel() {
+        disposable.dispose();
+    }
+
+    private Disposable disposable;
+
+    public WaveFunctionCollapse(Consumer<Event> eventEmitter, MemoryTileStore tileStore, TileSlotGridGenerator tileSlotGridGenerator, ConstraintApplicationCascade constraintApplicationCascade, MemoryGridStore gridStore) {
+        super(eventEmitter);
+        this.tileStore = tileStore;
+        this.tileSlotGridGenerator = tileSlotGridGenerator;
+        this.constraintApplicationCascade = constraintApplicationCascade;
+        this.gridStore = gridStore;
     }
 }
