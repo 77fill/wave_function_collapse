@@ -1,26 +1,39 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
+import dev.pschmalz.wave_function_collapse.domain.ConstraintAppender;
+import dev.pschmalz.wave_function_collapse.domain.MemoryTileStore;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSet;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
+import reactor.core.Disposable;
 
-@Component
-public class GenerateTileConstraints {
-    @Autowired
-    private TileSet tiles;
-    @Autowired
-    private View view;
+import java.util.function.Consumer;
 
-    @Async("background")
-    public void run() {
-        tiles.generateConstraints();
+public class GenerateTileConstraints extends Usecase {
+    private final MemoryTileStore tileStore;
+    private final ConstraintAppender constraintAppender;
+
+    @Override
+    protected void handleRun() {
+        disposable =
+        tileStore
+                .getTiles()
+                .transform(constraintAppender)
+                .subscribeWith(
+                        tileStore.addTiles(this::onException, this::onSuccess)
+                );
     }
 
-    @Async("display")
-    private void restraintsGenerated() {
-        view.restraintsGenerated();
+    @Override
+    protected void handleCancel() {
+        disposable.dispose();
     }
 
+    private Disposable disposable = () -> {};
+
+    public GenerateTileConstraints(Consumer<Event> eventEmitter, MemoryTileStore tileStore, ConstraintAppender constraintAppender) {
+        super(eventEmitter);
+        this.tileStore = tileStore;
+        this.constraintAppender = constraintAppender;
+    }
 }

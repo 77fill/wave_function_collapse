@@ -1,6 +1,8 @@
 package dev.pschmalz.wave_function_collapse.config;
 
+import dev.pschmalz.wave_function_collapse.domain.ConstraintAppender;
 import dev.pschmalz.wave_function_collapse.domain.MemoryTileStore;
+import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
 import dev.pschmalz.wave_function_collapse.usecase.InitTempDirectory;
 import dev.pschmalz.wave_function_collapse.usecase.LoadChosenTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.ShowTileImages;
@@ -29,6 +31,8 @@ public class UsecaseConfig {
     private ClasspathStore classpathStore;
     @Autowired
     private View view;
+    @Autowired
+    private ConstraintAppender constraintAppender;
 
     @Bean
     public LoadChosenTileImages loadChosenTileImages() {
@@ -43,5 +47,10 @@ public class UsecaseConfig {
     @Bean
     public ShowTileImages showTileImages() {
         return new ShowTileImages(usecaseEventEmitter, tileStore, view);
+    }
+
+    @Bean
+    public GenerateTileConstraints generateTileConstraints() {
+        return new GenerateTileConstraints(usecaseEventEmitter, tileStore, constraintAppender);
     }
 }
