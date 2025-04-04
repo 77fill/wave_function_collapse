@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 @Component
 public class UtilInfrastructure {
     @Autowired
-    private ResourceStoreImpl resources;
+    private ClasspathStore resources;
 
     public String getName(ClassPath.ResourceInfo resourceInfo) {
         return resourceInfo.getResourceName();
