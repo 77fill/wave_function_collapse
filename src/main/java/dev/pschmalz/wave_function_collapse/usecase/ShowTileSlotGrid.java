@@ -1,36 +1,38 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.Image;
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
-import dev.pschmalz.wave_function_collapse.infrastructure.view.ImagesView;
+import dev.pschmalz.wave_function_collapse.domain.MemoryGridStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
+import reactor.core.Disposable;
 
-import java.util.Optional;
+import java.util.function.Consumer;
 
-@Component
-public class ShowTileSlotGrid {
-    @Autowired
-    private View view;
-    @Autowired
-    private ImagesView imagesView;
-    @Autowired
-    private TileSlotGrid tileSlotGrid;
+public class ShowTileSlotGrid extends Usecase {
+    private final View view;
+    private final MemoryGridStore gridStore;
 
-    @Async("display")
-    public void run() {
-        imagesView.setDistanceBetween(0);
-        view.showImages(
-                tileSlotGrid.tileSlots()
-                            .map(TileSlot::getTile)
-                            .peek(tile -> {if(tile.isEmpty()) throw new IllegalStateException();})
-                            .map(Optional::get)
-                            .map(Tile::getImage)
-                            .map(Image::getFile)
-        );
+    @Override
+    protected void handleRun() {
+        disposable =
+        gridStore
+                .get()
+                .subscribe(
+                        view::showGrid,
+                        this::onException,
+                        this::onSuccess
+                );
+    }
+
+    @Override
+    protected void handleCancel() {
+        disposable.dispose();
+    }
+
+    private Disposable disposable;
+
+    public ShowTileSlotGrid(Consumer<Event> eventEmitter, View view, MemoryGridStore gridStore) {
+        super(eventEmitter);
+        this.view = view;
+        this.gridStore = gridStore;
     }
 }

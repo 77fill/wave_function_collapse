@@ -60,4 +60,9 @@ public class UsecaseConfig {
     public WaveFunctionCollapse waveFunctionCollapse() {
         return new WaveFunctionCollapse(usecaseEventEmitter, tileStore, tileSlotGridGenerator, constraintApplicationCascade, gridStore);
     }
+
+    @Bean
+    public ShowTileSlotGrid showTileSlotGrid() {
+        return new ShowTileSlotGrid(usecaseEventEmitter, view, gridStore);
+    }
 }
