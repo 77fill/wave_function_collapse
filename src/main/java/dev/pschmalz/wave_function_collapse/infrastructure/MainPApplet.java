@@ -5,6 +5,7 @@ import dev.pschmalz.wave_function_collapse.infrastructure.view.ImagesView;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.SubView;
 import dev.pschmalz.wave_function_collapse.usecase.*;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
+import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import processing.core.PApplet;
@@ -14,7 +15,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Component
-public class MainPApplet extends PApplet implements View {
+public class MainPApplet extends PApplet implements View, Usecase.EventListener {
     @Autowired
     private LoadResources_IntoTempDirectory loadResources_intoTempDirectory;
     @Autowired
@@ -89,5 +90,10 @@ public class MainPApplet extends PApplet implements View {
     @Override
     public void clear() {
         toBeShown = Optional.empty();
+    }
+
+    @Override
+    public void handleUsecaseEvent(Usecase.Event usecaseEvent) {
+
     }
 }

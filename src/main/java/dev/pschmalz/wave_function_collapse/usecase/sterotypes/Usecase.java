@@ -70,4 +70,7 @@ public abstract class Usecase implements Runnable {
     }
 
     public record Event(Usecase source, State state) {}
+    public interface EventListener {
+        void handleUsecaseEvent(Event usecaseEvent);
+    }
 }

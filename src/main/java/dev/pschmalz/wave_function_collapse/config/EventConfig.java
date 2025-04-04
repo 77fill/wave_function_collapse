@@ -1,6 +1,6 @@
 package dev.pschmalz.wave_function_collapse.config;
 
-import dev.pschmalz.wave_function_collapse.config.events.UsecaseEvent;
+import dev.pschmalz.wave_function_collapse.config.usecase_event_propagation.ApplicationUsecaseEvent;
 import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -18,9 +18,7 @@ public class EventConfig {
     public Consumer<Usecase.Event> usecaseEventEmitter() {
         return usecaseEvent ->
                 publisher.publishEvent(
-                        new UsecaseEvent(
-                                usecaseEvent.source(),
-                                usecaseEvent.state()));
+                        new ApplicationUsecaseEvent(usecaseEvent));
     }
 }
 
