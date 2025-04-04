@@ -18,7 +18,7 @@ public class MainPApplet extends PApplet implements View {
     @Autowired
     private LoadResources_IntoTempDirectory loadResources_intoTempDirectory;
     @Autowired
-    private ChooseTileImages_CreateTiles chooseTileImages_createTiles;
+    private LoadChosenTileImages loadChosenTileImages_;
     @Autowired
     private GenerateTileConstraints generateTileConstraints;
     @Autowired
@@ -56,7 +56,7 @@ public class MainPApplet extends PApplet implements View {
 
     @Override
     public void tempDirectoryLoaded() {
-        chooseTileImages_createTiles.run();
+        loadChosenTileImages_.run();
     }
 
     @Override
