@@ -69,7 +69,11 @@ public abstract class Usecase implements Runnable {
         }
     }
 
-    public record Event(Usecase source, State state) {}
+    public record Event(Usecase source, State state) {
+        public boolean isFrom(Class<? extends Usecase> usecaseType) {
+            return usecaseType.equals(source.getClass());
+        }
+    }
     public interface EventListener {
         void handleUsecaseEvent(Event usecaseEvent);
     }
