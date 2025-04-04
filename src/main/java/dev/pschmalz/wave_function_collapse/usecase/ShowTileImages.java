@@ -1,23 +1,38 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.Image;
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSet;
+import dev.pschmalz.wave_function_collapse.domain.MemoryTileStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
+import reactor.core.Disposable;
 
-@Component
-public class ShowTileImages {
-    @Autowired
-    private TileSet tiles;
-    @Autowired
-    private View view;
+import java.util.function.Consumer;
 
-    @Async("display")
-    public void run() {
-        view.clear();
-        view.showImages(tiles.map(Tile::getImage).map(Image::getFile));
+public class ShowTileImages extends Usecase {
+    private final MemoryTileStore tileStore;
+    private final View view;
+
+    @Override
+    protected void handleRun() {
+        disposable =
+        tileStore
+                .getImages()
+                .subscribe(
+                        view::showImage,
+                        this::onException,
+                        this::onSuccess
+                );
+    }
+
+    @Override
+    protected void handleCancel() {
+        disposable.dispose();
+    }
+
+    private Disposable disposable = () -> {};
+
+    public ShowTileImages(Consumer<Event> eventEmitter, MemoryTileStore tileStore, View view) {
+        super(eventEmitter);
+        this.tileStore = tileStore;
+        this.view = view;
     }
 }

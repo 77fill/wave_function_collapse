@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
+import dev.pschmalz.wave_function_collapse.domain.Image;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.DisplayExecutor;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.ImagesView;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.SubView;
@@ -85,6 +86,11 @@ public class MainPApplet extends PApplet implements View, Usecase.EventListener 
     @Override
     public void finishedWFC() {
         showTileSlotGrid.run();
+    }
+
+    @Override
+    public void showImage(Image image) {
+
     }
 
     @Override

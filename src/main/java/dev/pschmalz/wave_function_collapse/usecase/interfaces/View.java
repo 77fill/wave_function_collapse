@@ -1,5 +1,7 @@
 package dev.pschmalz.wave_function_collapse.usecase.interfaces;
 
+import dev.pschmalz.wave_function_collapse.domain.Image;
+
 import java.io.File;
 import java.util.stream.Stream;
 
@@ -15,4 +17,6 @@ public interface View {
     void restraintsGenerated();
 
     void finishedWFC();
+
+    void showImage(Image image);
 }
