@@ -1,7 +1,5 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.filesystem_store;
 
-import static com.google.common.base.Preconditions.checkState;
-
 import dev.pschmalz.wave_function_collapse.domain.Image;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
 import jakarta.annotation.PostConstruct;
@@ -15,6 +13,8 @@ import java.io.InputStream;
 import java.nio.file.FileSystem;
 import java.nio.file.Files;
 import java.nio.file.Path;
+
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  * FYI: This is possible: (pseudocode)<br>

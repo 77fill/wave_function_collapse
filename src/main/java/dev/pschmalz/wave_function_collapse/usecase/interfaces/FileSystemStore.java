@@ -1,9 +1,9 @@
 package dev.pschmalz.wave_function_collapse.usecase.interfaces;
 
+import dev.pschmalz.wave_function_collapse.usecase.data.Image;
 import reactor.core.publisher.Mono;
 
 import java.io.File;
-import dev.pschmalz.wave_function_collapse.usecase.data.Image;
 
 public interface FileSystemStore {
     Mono<File> getTempDirectoryPath();

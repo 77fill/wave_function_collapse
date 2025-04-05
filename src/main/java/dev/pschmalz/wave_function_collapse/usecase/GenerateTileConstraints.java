@@ -2,8 +2,6 @@ package dev.pschmalz.wave_function_collapse.usecase;
 
 import dev.pschmalz.wave_function_collapse.domain.ConstraintAppender;
 import dev.pschmalz.wave_function_collapse.domain.MemoryTileStore;
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSet;
-import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
 import reactor.core.Disposable;
 

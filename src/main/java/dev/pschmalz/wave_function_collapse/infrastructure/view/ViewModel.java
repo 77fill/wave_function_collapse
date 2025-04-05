@@ -1,6 +1,5 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view;
 
-import dev.pschmalz.wave_function_collapse.domain.Image;
 import processing.core.PImage;
 
 import java.util.List;

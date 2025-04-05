@@ -1,9 +1,6 @@
 package dev.pschmalz.wave_function_collapse.domain_workers.constrain_three_x_three;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import com.google.common.base.Function;
-import com.google.common.base.Throwables;
 import dev.pschmalz.wave_function_collapse.domain.abstractions.FromTileSlotDirection_ToConstraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Image;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
@@ -11,10 +8,10 @@ import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGri
 import dev.pschmalz.wave_function_collapse.domain.workers.ConstraintCreator;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 public class ConstrainThreeXThree implements ConstraintCreator {
     private TileSlotGrid grid;

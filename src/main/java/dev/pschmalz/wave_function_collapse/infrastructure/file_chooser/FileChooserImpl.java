@@ -2,7 +2,6 @@ package dev.pschmalz.wave_function_collapse.infrastructure.file_chooser;
 
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Sinks;
 
 import javax.swing.*;
 import java.io.File;

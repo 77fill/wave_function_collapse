@@ -3,7 +3,6 @@ package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 import dev.pschmalz.wave_function_collapse.domain.abstractions.FromTileSlotDirection_ToConstraint;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotDirection;
 
-import java.io.File;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;

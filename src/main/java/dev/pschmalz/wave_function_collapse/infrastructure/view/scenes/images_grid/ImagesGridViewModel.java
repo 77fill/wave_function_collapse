@@ -1,10 +1,8 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
 
-import dev.pschmalz.wave_function_collapse.infrastructure.view.Scene;
 import processing.core.PImage;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 

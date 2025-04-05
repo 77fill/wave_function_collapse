@@ -6,7 +6,6 @@ import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import processing.core.PApplet;
-import processing.core.PVector;
 
 import java.util.Optional;
 import java.util.Queue;

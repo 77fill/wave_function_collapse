@@ -9,13 +9,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.Closeable;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 public class ClasspathStoreImpl implements ClasspathStore {
     private final ClassPath classPath;
