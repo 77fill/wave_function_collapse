@@ -1,13 +1,14 @@
 package dev.pschmalz.wave_function_collapse.config;
 
 import com.google.common.reflect.ClassPath;
-import dev.pschmalz.wave_function_collapse.infrastructure.ClasspathStoreImpl;
+import dev.pschmalz.wave_function_collapse.infrastructure.classpath_store.ClasspathStoreImpl;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @Configuration
@@ -19,6 +20,6 @@ public class InfrastructureConfig {
 
     @Bean
     public ClasspathStore classpathStore() {
-        return new ClasspathStoreImpl(allowedNameSuffixes, classPath);
+        return new ClasspathStoreImpl(allowedNameSuffixes, classPath, Path.of("dev", "pschmalz", "wave_function_collapse"));
     }
 }
