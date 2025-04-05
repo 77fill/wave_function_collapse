@@ -70,7 +70,7 @@ public class TileSlotGrid {
     }
 
     public Set<Tile> getTileSet() {
-        return tileSet.getSet();
+        return tiles;
     }
 
 
