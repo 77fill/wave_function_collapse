@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 import static dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotDirection.from;
 
 public class TileSlot implements Comparable<TileSlot> {
-    public int x, y;
-    private TileSlotGrid tileSlotGrid;
+    public final int x, y;
+    private final TileSlotGrid tileSlotGrid;
     private Set<Tile> possibleTiles;
 
     public Optional<Constraint> getConstraintFor(TileSlot target) {
@@ -94,5 +94,12 @@ public class TileSlot implements Comparable<TileSlot> {
 
     public void initialize() {
         possibleTiles = tileSlotGrid.getTileSet();
+    }
+
+    public TileSlot(int x, int y, TileSlotGrid tileSlotGrid) {
+        this.x = x;
+        this.y = y;
+        this.tileSlotGrid = tileSlotGrid;
+        this.possibleTiles = tileSlotGrid.getTileSet();
     }
 }
