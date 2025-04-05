@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.config;
+package dev.pschmalz.wave_function_collapse.config.multithreading;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 

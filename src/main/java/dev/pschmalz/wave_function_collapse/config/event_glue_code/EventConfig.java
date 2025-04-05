@@ -1,6 +1,5 @@
-package dev.pschmalz.wave_function_collapse.config;
+package dev.pschmalz.wave_function_collapse.config.event_glue_code;
 
-import dev.pschmalz.wave_function_collapse.config.usecase_event_propagation.ApplicationUsecaseEvent;
 import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -14,6 +13,9 @@ public class EventConfig {
     @Autowired
     private ApplicationEventPublisher publisher;
 
+    /**
+     * @see dev.pschmalz.wave_function_collapse.config.event_glue_code Solution -> Usecase Layer -> 'custom'
+     */
     @Bean
     public Consumer<Usecase.Event> usecaseEventEmitter() {
         return usecaseEvent ->

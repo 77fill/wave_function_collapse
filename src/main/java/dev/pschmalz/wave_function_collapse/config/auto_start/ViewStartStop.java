@@ -1,8 +1,7 @@
-package dev.pschmalz.wave_function_collapse.config;
+package dev.pschmalz.wave_function_collapse.config.auto_start;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.SmartLifecycle;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import processing.core.PApplet;
 
@@ -13,7 +12,6 @@ public class ViewStartStop implements SmartLifecycle {
     private volatile boolean running = false;
 
     @Override
-    @Async("display")
     public void start() {
         running = true;
         PApplet.runSketch(new String[] {"", ""}, pApplet);
@@ -21,8 +19,8 @@ public class ViewStartStop implements SmartLifecycle {
 
     @Override
     public void stop() {
-        running = false;
         pApplet.stop();
+        running = false;
     }
 
     @Override

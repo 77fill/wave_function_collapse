@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -20,25 +21,31 @@ import java.util.List;
 
 @Configuration
 public class InfrastructureConfig {
-    @Value("${infrastructure.contained-resources.choose-file-name-suffixes}")
+    @Value("${bundled-resources.allowed-name-suffixes}")
     private List<String> allowedNameSuffixes;
+    @Value("${bundled-resources.base-path}")
+    private Path resourcesBasePath;
+    @Value("${file-system.temp-dir-prefix}")
+    private String tempDirPrefix;
     @Autowired
     private ClassPath classPath;
+    @Autowired
+    private JFileChooser jFileChooser;
 
     @Bean
     public ClasspathStore classpathStore() {
-        return new ClasspathStoreImpl(allowedNameSuffixes, classPath, Path.of("dev", "pschmalz", "wave_function_collapse"));
+        return new ClasspathStoreImpl(allowedNameSuffixes, classPath, resourcesBasePath);
     }
 
     @Bean
     public FileChooser fileChooser() {
-        return new FileChooserImpl();
+        return new FileChooserImpl(jFileChooser);
     }
 
     @Bean
     public FileSystemStore fileSystemStore() throws IOException {
         return new FileSystemStoreImpl(
                 FileSystems.getDefault(),
-                Files.createTempDirectory("wave_function_collapse"));
+                Files.createTempDirectory(tempDirPrefix));
     }
 }

@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.stream.Stream;
 
 public class FileChooserImpl implements FileChooser {
-    private final JFileChooser jFileChooser = new JFileChooser();
+    private final JFileChooser jFileChooser;
 
     @Override
     public Flux<File> chooseImagePaths(File startDirectory) {
@@ -27,5 +27,9 @@ public class FileChooserImpl implements FileChooser {
 
             sink.complete();
         });
+    }
+
+    public FileChooserImpl(JFileChooser jFileChooser) {
+        this.jFileChooser = jFileChooser;
     }
 }
