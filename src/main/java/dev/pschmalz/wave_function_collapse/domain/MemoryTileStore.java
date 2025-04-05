@@ -8,31 +8,51 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.SignalType;
 
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 public class MemoryTileStore {
-    public void createTileFromImage(Image image) {
+    private final Set<Tile> tiles = new CopyOnWriteArraySet<>();
+    private final Lock tilesLock = new ReentrantLock();
 
+    public void createTileFromImage(Image image) {
+        tilesLock.lock();
+        tiles.add(new Tile(image));
+        tilesLock.unlock();
     }
 
     public Flux<Image> getImages() {
-        throw new IllegalStateException();
+        return getTiles().map(Tile::getImage);
     }
 
     public Flux<Tile> getTiles() {
-        return null;
+        return Flux.fromIterable(tiles)
+
+                .doOnSubscribe(s -> tilesLock.lock())
+                .doOnTerminate(tilesLock::unlock);
     }
 
     private void addTile(Tile tile) {
-
+        tilesLock.lock();
+        tiles.add(tile);
+        tilesLock.unlock();
     }
 
     private List<Tile> asList() {
-        return List.of();
+        tilesLock.lock();
+        var tileList = tiles.stream().toList();
+        tilesLock.unlock();
+
+        return tileList;
     }
 
     private void delete(List<Tile> toBeDeleted) {
-
+        tilesLock.lock();
+        toBeDeleted.forEach(tiles::remove);
+        tilesLock.unlock();
     }
 
     public BaseSubscriber<Tile> addTiles(Consumer<Throwable> onException, Runnable onSuccess) {

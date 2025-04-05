@@ -2,6 +2,7 @@ package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
 import dev.pschmalz.wave_function_collapse.domain.abstractions.FromTileSlotDirection_ToConstraint;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotDirection;
+import dev.pschmalz.wave_function_collapse.domain.Image;
 
 import java.util.Optional;
 import java.util.Set;
@@ -11,7 +12,7 @@ import java.util.function.Predicate;
 import static dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotDirection.from;
 
 public class Tile {
-    private Image image;
+    private final Image image;
     private Set<FromTileSlotDirection_ToConstraint> conditionalConstraints;
 
     public Tile(Image image) {
