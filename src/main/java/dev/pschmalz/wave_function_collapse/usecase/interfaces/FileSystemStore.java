@@ -7,6 +7,6 @@ import dev.pschmalz.wave_function_collapse.usecase.data.Image;
 
 public interface FileSystemStore {
     Mono<File> getTempDirectoryPath();
-    dev.pschmalz.wave_function_collapse.domain.Image getImage(File imagePath);
+    Mono<dev.pschmalz.wave_function_collapse.domain.Image> getImage(File imagePath);
     void addImageToTempDirectory(Image image);
 }

@@ -19,7 +19,7 @@ public class LoadChosenTileImages extends Usecase {
         fileSystemStore
                 .getTempDirectoryPath()
                 .flatMapMany(fileChooser::chooseImagePaths)
-                .map(fileSystemStore::getImage)
+                .flatMap(fileSystemStore::getImage)
                 .subscribe(
                         tileStore::createTileFromImage,
                         this::onException,
