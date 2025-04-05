@@ -1,58 +1,23 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
-import com.google.common.reflect.ClassPath;
 import org.apache.commons.lang3.function.FailableConsumer;
 import org.apache.commons.lang3.function.FailableFunction;
 import org.apache.commons.lang3.function.FailablePredicate;
 import org.apache.commons.lang3.stream.Streams;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.function.*;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
-@Component
 public class UtilInfrastructure {
-    @Autowired
-    private ClasspathStore resources;
-
-    public String getName(ClassPath.ResourceInfo resourceInfo) {
-        return resourceInfo.getResourceName();
-    }
-
-    public String getSuffix(String fileName) {
-        return Arrays.stream(fileName.split("\\."))
-                .toList()
-                .getLast();
-    }
-
-    public <T> Pair<T,T> toPair(T obj) {
-        return ImmutablePair.of(obj, obj);
-    }
-
-    public InputStream getContent(ClassPath.ResourceInfo resourceInfo) throws IOException {
-        var instream = resourceInfo.asByteSource().openBufferedStream();
-
-        resources.addCloseable(instream);
-
-        return instream;
-    }
 
     public <T> ExtendedStream<T> extendedStream(Collection<T> items) {
         return new ExtendedStream<>(Streams.failableStream(items));
     }
 
-    public <T> ExtendedStream<T> extendedStream(T onlyOne) {
-        return extendedStream(List.of(onlyOne));
-    }
 
     public static class ExtendedStream<T> {
         private Streams.FailableStream<T> stream;
