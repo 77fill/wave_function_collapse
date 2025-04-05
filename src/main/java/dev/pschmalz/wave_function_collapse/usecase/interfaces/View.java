@@ -7,18 +7,6 @@ import java.io.File;
 import java.util.stream.Stream;
 
 public interface View {
-    void tempDirectoryLoaded();
-
-    void tilesLoaded();
-
-    void clear();
-
-    void showImages(Stream<File> images);
-
-    void restraintsGenerated();
-
-    void finishedWFC();
-
     void showImage(Image image);
 
     void showGrid(TileSlotGrid grid);
