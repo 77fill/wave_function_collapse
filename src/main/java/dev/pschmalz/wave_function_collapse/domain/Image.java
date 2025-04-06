@@ -8,4 +8,16 @@ public class Image {
     public Image(BufferedImage bufferedImage) {
         this.bufferedImage = bufferedImage;
     }
+
+    public int getWidth() {
+        return bufferedImage.getWidth();
+    }
+
+    public int getHeight() {
+        return bufferedImage.getHeight();
+    }
+
+    public Pixel get(int x, int y) {
+        return new Pixel(0,0,0);
+    }
 }

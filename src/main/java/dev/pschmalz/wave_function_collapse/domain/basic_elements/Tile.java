@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
+import dev.pschmalz.wave_function_collapse.domain.SmartConstraint;
 import dev.pschmalz.wave_function_collapse.domain.abstractions.FromTileSlotDirection_ToConstraint;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotDirection;
 import dev.pschmalz.wave_function_collapse.domain.Image;
@@ -14,9 +15,15 @@ import static dev.pschmalz.wave_function_collapse.domain.collections_tuples.Tile
 public class Tile {
     private final Image image;
     private Set<FromTileSlotDirection_ToConstraint> conditionalConstraints;
+    private Set<SmartConstraint> constraints;
 
     public Tile(Image image) {
         this.image = image;
+    }
+
+    public Tile(Image image, Set<SmartConstraint> constraints) {
+        this.image = image;
+        this.constraints = constraints;
     }
 
     public Image getImage() {

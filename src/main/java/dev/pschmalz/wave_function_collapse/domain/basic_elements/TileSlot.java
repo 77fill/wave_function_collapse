@@ -40,6 +40,17 @@ public class TileSlot implements Comparable<TileSlot> {
         return this;
     }
 
+    public Optional<TileSlot> getNeighbor(Direction direction) {
+        Optional<TileSlot> neighbor = Optional.empty();
+        switch (direction) {
+            case UP -> neighbor = topNeighbor();
+            case DOWN -> neighbor = bottomNeighbor();
+            case LEFT -> neighbor = leftNeighbor();
+            case RIGHT -> neighbor = rightNeighbor();
+        }
+        return neighbor;
+    }
+
     public Stream<TileSlot> getNeighbors() {
         return Stream.of(rightNeighbor(),leftNeighbor(),topNeighbor(),bottomNeighbor())
                 .filter(Optional::isPresent)
@@ -101,5 +112,9 @@ public class TileSlot implements Comparable<TileSlot> {
         this.y = y;
         this.tileSlotGrid = tileSlotGrid;
         this.possibleTiles = tileSlotGrid.getTileSet();
+    }
+
+    public enum Direction {
+        UP, DOWN, LEFT, RIGHT
     }
 }

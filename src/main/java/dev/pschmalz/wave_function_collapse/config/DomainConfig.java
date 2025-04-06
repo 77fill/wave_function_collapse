@@ -14,7 +14,12 @@ public class DomainConfig {
 
     @Bean
     public ConstraintAppender constraintAppender() {
-        return new ConstraintAppender();
+        return new ConstraintAppender(defaultConstraintGenerator());
+    }
+
+    @Bean
+    public ConstraintGenerator defaultConstraintGenerator() {
+        return null;
     }
 
     @Bean
