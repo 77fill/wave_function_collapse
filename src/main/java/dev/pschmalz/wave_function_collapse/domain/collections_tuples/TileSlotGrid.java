@@ -95,8 +95,11 @@ public class TileSlotGrid {
 
     public TileSlotGrid copy() {
         var newGrid = new TileSlotGrid(tiles, width, height, random);
-        newGrid.tileSlots = this.tileSlots;
-        // TODO
+        newGrid.tileSlots =
+                IntStream.range(0,width)
+                        .mapToObj(x -> Arrays.copyOf(this.tileSlots[x],height))
+                        .toArray(TileSlot[][]::new);
+
         return newGrid;
     }
 }
