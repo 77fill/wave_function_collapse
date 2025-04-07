@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
+import dev.pschmalz.wave_function_collapse.domain.Image;
 import dev.pschmalz.wave_function_collapse.domain.SmartConstraint;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
 import reactor.core.publisher.Flux;
@@ -22,6 +23,10 @@ public class TileSlot implements Comparable<TileSlot> {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .reduce(Constraint.or);
+    }
+
+    public Image getImage() {
+        return possibleTiles.stream().findFirst().get().getImage();
     }
 
     public boolean isSuperposition() {
