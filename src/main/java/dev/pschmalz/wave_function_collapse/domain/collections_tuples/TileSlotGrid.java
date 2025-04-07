@@ -6,10 +6,7 @@ import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -94,5 +91,12 @@ public class TileSlotGrid {
         this.width = width;
         this.height = height;
         this.random = random;
+    }
+
+    public TileSlotGrid copy() {
+        var newGrid = new TileSlotGrid(tiles, width, height, random);
+        newGrid.tileSlots = this.tileSlots;
+        // TODO
+        return newGrid;
     }
 }

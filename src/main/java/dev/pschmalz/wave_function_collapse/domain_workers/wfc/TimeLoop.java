@@ -4,36 +4,44 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.UnaryOperator;
 
 @Component
-public class TimeLoop {
-    private Runnable doSomething;
+public class TimeLoop <T> {
+    private T something;
+    private UnaryOperator<T> convertSomething;
     private BooleanSupplier whileSomething;
     private int maxRepeat;
     @Autowired
     private History history;
 
-    public TimeLoop do_(Runnable doSomething) {
-        this.doSomething = doSomething;
+    public TimeLoop<T> apply(UnaryOperator<T> convertSomething) {
+        this.convertSomething = convertSomething;
         return this;
     }
 
-    public TimeLoop while_(BooleanSupplier whileSomething) {
+    public TimeLoop<T> on(T something) {
+        this.something = something;
+        return this;
+    }
+
+    public TimeLoop<T> while_(BooleanSupplier whileSomething) {
         this.whileSomething = whileSomething;
         return this;
     }
 
-    public TimeLoop maxRepeat(int maxRepeat) {
+    public TimeLoop<T> maxRepeat(int maxRepeat) {
         this.maxRepeat = maxRepeat;
         return this;
     }
 
-    public void start() {
+    public TimeLoop<T> start() {
         int currentRepetition = 0;
+        T old = something;
 
         do {
-            history.restoreIfExists();
-            doSomething.run();
+            something = old;
+            something = convertSomething.apply(something);
         }
         while (whileSomething.getAsBoolean()
                 && currentRepetition++ < maxRepeat);
@@ -41,6 +49,10 @@ public class TimeLoop {
         if(currentRepetition >= maxRepeat)
             throw new IllegalStateException();
 
-        history.update();
+        return this;
+    }
+
+    public T getResult() {
+        return something;
     }
 }

@@ -1,6 +1,7 @@
 package dev.pschmalz.wave_function_collapse.config;
 
 import dev.pschmalz.wave_function_collapse.domain.*;
+import dev.pschmalz.wave_function_collapse.domain.WaveFunctionCollapse;
 import dev.pschmalz.wave_function_collapse.usecase.*;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;
@@ -32,7 +33,7 @@ public class UsecaseConfig {
     @Autowired
     private TileSlotGridGenerator tileSlotGridGenerator;
     @Autowired
-    private ConstraintApplicationCascade constraintApplicationCascade;
+    private WaveFunctionCollapse waveFunctionCollapse;
     @Autowired
     private MemoryGridStore gridStore;
 
@@ -57,8 +58,8 @@ public class UsecaseConfig {
     }
 
     @Bean
-    public WaveFunctionCollapse waveFunctionCollapse() {
-        return new WaveFunctionCollapse(usecaseEventEmitter, tileStore, tileSlotGridGenerator, constraintApplicationCascade, gridStore);
+    public dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse waveFunctionCollapse() {
+        return new dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse(usecaseEventEmitter, tileStore, tileSlotGridGenerator, waveFunctionCollapse, gridStore);
     }
 
     @Bean

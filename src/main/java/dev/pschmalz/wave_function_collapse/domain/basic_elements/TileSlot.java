@@ -1,7 +1,10 @@
 package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
+import dev.pschmalz.wave_function_collapse.domain.SmartConstraint;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
+import reactor.core.publisher.Flux;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -74,7 +77,7 @@ public class TileSlot implements Comparable<TileSlot> {
         getNeighbors().forEach(target -> target.apply(getConstraintFor(target)));
     }
 
-    private void apply(Optional<Constraint> maybeConstraint) {
+    public void apply(Optional<Constraint> maybeConstraint) {
         if(maybeConstraint.isEmpty())
             return;
 
@@ -112,6 +115,10 @@ public class TileSlot implements Comparable<TileSlot> {
         this.y = y;
         this.tileSlotGrid = tileSlotGrid;
         this.possibleTiles = tileSlotGrid.getTileSet();
+    }
+
+    public Flux<SmartConstraint> getSmartConstraints() {
+        return Flux.just();
     }
 
     public enum Direction {

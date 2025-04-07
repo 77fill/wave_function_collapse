@@ -23,8 +23,8 @@ public class DomainConfig {
     }
 
     @Bean
-    public ConstraintApplicationCascade constraintApplicationCascade() {
-        return new ConstraintApplicationCascade();
+    public WaveFunctionCollapse constraintApplicationCascade() {
+        return new WaveFunctionCollapse();
     }
 
     @Bean
