@@ -1,7 +1,5 @@
 package dev.pschmalz.wave_function_collapse.infrastructure;
 
-import dev.pschmalz.wave_function_collapse.usecase.data.CustomResource;
-import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystem_TempDirectory;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 

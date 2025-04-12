@@ -1,59 +1,56 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
-import reactor.core.publisher.Flux;
-import reactor.util.function.Tuple2;
-import reactor.util.function.Tuples;
+import io.vavr.Function1;
+import io.vavr.Tuple2;
+import io.vavr.collection.Stream;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import static io.vavr.API.*;
 
-public class ConstraintAppender implements Function<Flux<Tile>,Flux<Tile>> {
-    private ConstraintGenerator constraintGenerator;
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class ConstraintAppender implements Function1<Stream<Tile>,Stream<Tile>> {
+    ConstraintGenerator constraintGenerator;
 
     @Override
-    public Flux<Tile> apply(Flux<Tile> tileFlux) {
-        return toPairsOf_Tile_SetOfOtherTiles(tileFlux)
-                .map(this::pairsOf_Tile_FoundConstraints)
-                .map(this::toTileContainingConstraints);
+    public Stream<Tile> apply(Stream<Tile> tiles) {
+        return tiles.zip(Stream(tiles).cycle())
+                    .map(to_tile_otherTiles)
+                    .flatMap(toStream_tile_otherTile)
+                    .map(to_tile_constraint)
+                    .map(to_tileWithConstraint);
     }
 
-    private Flux<Tuple2<Tile,Set<Tile>>> toPairsOf_Tile_SetOfOtherTiles(Flux<Tile> tiles) {
-        return Flux.zip(
-                tiles.share(),
-                tiles.collectList()
-                        .map(HashSet::new)
-                        .repeat());
+    private Tuple2<Tile, Stream<Tile>> to_tile_otherTiles(Tile tile, Stream<Tile> allTiles) {
+        return Tuple(tile, allTiles.remove(tile));
     }
 
-    private Tile toTileContainingConstraints(Tuple2<Tile, Set<SmartConstraint>> pair) {
-        return new Tile(
-                pair.getT1().getImage(),
-                pair.getT2()
-        );
+    private Stream<Tuple2<Tile,Tile>> toStream_tile_otherTile(Tile tile, Stream<Tile> otherTiles) {
+        return Stream(tile).cycle().zip(otherTiles);
     }
 
-    private Tuple2<Tile, Set<SmartConstraint>> pairsOf_Tile_FoundConstraints(Tuple2<Tile, Set<Tile>> pair) {
-        var tile = pair.getT1();
-        var otherTiles = new HashSet<>(pair.getT2());
-        otherTiles.remove(tile);
-        var constraints =
-                otherTiles.stream()
-                    .flatMap(otherTile -> findConstraintsFor(tile, otherTile))
-                    .collect(Collectors.toSet());
-
-        return Tuples.of(tile, constraints);
+    private Tuple2<Tile,SmartConstraint> to_tile_constraint(Tile tile, Tile otherTile) {
+        return Tuple(tile, constraintGenerator.apply(tile,otherTile));
     }
 
-    private Stream<SmartConstraint> findConstraintsFor(Tile tile, Tile otherTile) {
-        return constraintGenerator.apply(tile, otherTile).stream();
+    private Tile to_tileWithConstraint(Tile tile, SmartConstraint constraint) {
+        return tile.withConstraints(Set(constraint));
     }
 
-    public ConstraintAppender(ConstraintGenerator constraintGenerator) {
-        this.constraintGenerator = constraintGenerator;
-    }
+    Function1<
+            Tuple2<Tile, Stream<Tile>>,
+            Tuple2<Tile, Stream<Tile>>> to_tile_otherTiles = Function(this::to_tile_otherTiles).tupled();
+    Function1<
+            Tuple2<Tile, Stream<Tile>>,
+            Stream<Tuple2<Tile,Tile>>> toStream_tile_otherTile = Function(this::toStream_tile_otherTile).tupled();
+    Function1<
+            Tuple2<Tile, Tile>,
+            Tuple2<Tile,SmartConstraint>> to_tile_constraint = Function(this::to_tile_constraint).tupled();
+    Function1<
+            Tuple2<Tile, SmartConstraint>,
+            Tile> to_tileWithConstraint = Function(this::to_tileWithConstraint).tupled();
+
 }

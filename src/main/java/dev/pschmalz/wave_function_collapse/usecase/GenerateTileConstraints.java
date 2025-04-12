@@ -1,37 +1,32 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
 import dev.pschmalz.wave_function_collapse.domain.ConstraintAppender;
-import dev.pschmalz.wave_function_collapse.domain.MemoryTileStore;
-import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
-import reactor.core.Disposable;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
+import io.vavr.Function1;
+import io.vavr.collection.Set;
+import io.vavr.collection.Stream;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
-import java.util.function.Consumer;
+import static io.vavr.API.Function;
 
-public class GenerateTileConstraints extends Usecase {
-    private final MemoryTileStore tileStore;
-    private final ConstraintAppender constraintAppender;
 
-    @Override
-    protected void handleRun() {
-        disposable =
-        tileStore
-                .getTiles()
-                .transform(constraintAppender)
-                .subscribeWith(
-                        tileStore.addTiles(this::onException, this::onSuccess)
-                );
-    }
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class GenerateTileConstraints implements Function1<Iterable<Tile>, Set<Tile>> {
+    ConstraintAppender constraintAppender;
 
     @Override
-    protected void handleCancel() {
-        disposable.dispose();
+    public Set<Tile> apply(Iterable<Tile> tile) {
+        return computation.apply(tile);
     }
 
-    private Disposable disposable = () -> {};
-
-    public GenerateTileConstraints(Consumer<Event> eventEmitter, MemoryTileStore tileStore, ConstraintAppender constraintAppender) {
-        super(eventEmitter);
-        this.tileStore = tileStore;
-        this.constraintAppender = constraintAppender;
+    private Set<Tile> computation(Iterable<Tile> tiles) {
+        return constraintAppender.apply(
+                    Stream.ofAll(tiles)
+            ).toSet();
     }
+
+    Function1<Iterable<Tile>,Set<Tile>> computation = Function(this::computation).memoized();
 }

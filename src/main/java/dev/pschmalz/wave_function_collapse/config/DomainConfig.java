@@ -1,6 +1,9 @@
 package dev.pschmalz.wave_function_collapse.config;
 
-import dev.pschmalz.wave_function_collapse.domain.*;
+import dev.pschmalz.wave_function_collapse.domain.ConstraintAppender;
+import dev.pschmalz.wave_function_collapse.domain.ConstraintGenerator;
+import dev.pschmalz.wave_function_collapse.domain.TileSlotGridGenerator;
+import dev.pschmalz.wave_function_collapse.domain.WaveFunctionCollapse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

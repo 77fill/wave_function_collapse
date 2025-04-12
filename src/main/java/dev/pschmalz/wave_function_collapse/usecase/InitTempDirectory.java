@@ -2,37 +2,32 @@ package dev.pschmalz.wave_function_collapse.usecase;
 
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
-import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
-import reactor.core.Disposable;
+import io.vavr.concurrent.Future;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Delegate;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 
-import java.util.function.Consumer;
+import static io.vavr.API.Future;
 
-public class InitTempDirectory extends Usecase {
-    private final ClasspathStore classpathStore;
-    private final FileSystemStore fileSystemStore;
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class InitTempDirectory implements Future<Void> {
+    ClasspathStore classpathStore;
+    FileSystemStore fileSystemStore;
 
-    @Override
-    protected void handleRun() {
-        disposable =
-        classpathStore
-                .getExampleImages()
-                .subscribe(
-                        fileSystemStore::addImageToTempDirectory,
-                        this::onException,
-                        this::onSuccess
-                );
-    }
+    @NonFinal
+    @Delegate
+    Future<Void> future;
 
-    @Override
-    protected void handleCancel() {
-        disposable.dispose();
-    }
+    private Void computation() {
+        classpathStore.getExampleImages()
+                .andThen(images -> images.forEach(fileSystemStore::addImageToTempDirectory));
+        return null;
+    };
 
-    Disposable disposable = () -> {};
-
-    public InitTempDirectory(Consumer<Event> eventEmitter, ClasspathStore classpathStore, FileSystemStore fileSystemStore) {
-        super(eventEmitter);
-        this.classpathStore = classpathStore;
-        this.fileSystemStore = fileSystemStore;
+    public void run() {
+        future = Future(this::computation);
     }
 }

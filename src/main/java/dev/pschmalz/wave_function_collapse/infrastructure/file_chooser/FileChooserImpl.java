@@ -1,35 +1,40 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.file_chooser;
 
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;
-import reactor.core.publisher.Flux;
+import io.vavr.Function1;
+import io.vavr.collection.Stream;
+import io.vavr.control.Option;
+import lombok.AllArgsConstructor;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.stream.Stream;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
+@AllArgsConstructor
 public class FileChooserImpl implements FileChooser {
     private final JFileChooser jFileChooser;
+    private final Lock jFileChooserLock = new ReentrantLock();
 
     @Override
-    public Flux<File> chooseImagePaths(File startDirectory) {
-        jFileChooser.setCurrentDirectory(startDirectory);
+    public Stream<File> chooseImagePaths(File startDirectory) {
+        return Stream.continually(
+            () -> {
+                jFileChooserLock.lock();
+                // BLOCKS UNTIL FREE
 
-        return Flux.generate(sink -> {
-            var userAnswer = jFileChooser.showOpenDialog(null);
-            /*
-             * BLOCK TILL USER IS DONE<br>
-             * (But Flux is already returned)
-             */
-            if(userAnswer == JFileChooser.APPROVE_OPTION) {
-                Stream.of(jFileChooser.getSelectedFiles())
-                        .forEach(sink::next);
-            }
+                jFileChooser.setCurrentDirectory(startDirectory);
+                var userAnswer = jFileChooser.showOpenDialog(null);
+                // BLOCKS UNTIL USER IS DONE
 
-            sink.complete();
-        });
-    }
+                var result = Option.when(
+                        userAnswer == JFileChooser.APPROVE_OPTION,
+                        jFileChooser::getSelectedFiles);
 
-    public FileChooserImpl(JFileChooser jFileChooser) {
-        this.jFileChooser = jFileChooser;
+                jFileChooserLock.unlock();
+                return result;
+            }).take(1)
+                .flatMap(Function1.identity())
+                .flatMap(Stream::of);
     }
 }

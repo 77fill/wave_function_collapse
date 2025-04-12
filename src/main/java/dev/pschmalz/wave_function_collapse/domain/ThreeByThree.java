@@ -1,7 +1,5 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
-import static java.util.stream.IntStream.range;
-
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
@@ -11,10 +9,10 @@ import reactor.util.function.Tuples;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import static java.util.stream.IntStream.range;
 
 public class ThreeByThree implements ConstraintGenerator {
     @Override

@@ -3,70 +3,83 @@ package dev.pschmalz.wave_function_collapse.domain;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
-import dev.pschmalz.wave_function_collapse.domain_workers.wfc.OrderOf_CascadeOf_ConstraintApplication;
-import dev.pschmalz.wave_function_collapse.domain_workers.wfc.TimeLoop;
-import reactor.core.publisher.Flux;
-import reactor.util.function.Tuple2;
-import reactor.util.function.Tuples;
+import io.vavr.Function1;
+import io.vavr.Function3;
+import io.vavr.Tuple2;
+import io.vavr.collection.Stream;
+import io.vavr.control.Option;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
+import static io.vavr.API.*;
 
-public class WaveFunctionCollapse implements UnaryOperator<TileSlotGrid> {
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+public class WaveFunctionCollapse implements Function1<TileSlotGrid,TileSlotGrid> {
+    TimeLoop<TileSlotGrid> timeLoop = new TimeLoop<>();
 
     @Override
     public TileSlotGrid apply(TileSlotGrid grid) {
-        return new WaveFunctionCollapseSpecific(grid).get();
-    }
-}
-
-class WaveFunctionCollapseSpecific implements Supplier<TileSlotGrid> {
-    private final TimeLoop<TileSlotGrid> timeLoop = new TimeLoop<>();
-    private final TileSlotGrid grid;
-
-    @Override
-    public TileSlotGrid get() {
         var currentGrid = grid;
         while (currentGrid.hasSuperposition()) {
             currentGrid =
-            timeLoop.apply(this::step)
-                    .on(currentGrid)
-                    .while_(currentGrid::isDeadEnd)
-                    .maxRepeat(20)
-                    .start()
-                    .getResult();
+                    timeLoop.apply(this::step)
+                            .on(currentGrid)
+                            .while_(currentGrid::isDeadEnd)
+                            .maxRepeat(20)
+                            .start()
+                            .getResult();
         }
         return currentGrid;
     }
 
     private TileSlotGrid step(TileSlotGrid grid) {
-        var collapsedSlot = grid.getTileSlot_withLeastPossibilities().get().randomCollapse();
+        var targetTileSlot = grid.getWithLeastPossibilities();
+        var newGrid = grid.randomCollapse(targetTileSlot).get();
 
-        return constraintApplicationCascade(grid, List.of(collapsedSlot));
+        return constraintApplicationCascade(newGrid, Stream(targetTileSlot), ConstraintApplicationHistory.empty());
     }
 
-    private TileSlotGrid constraintApplicationCascade(TileSlotGrid grid, List<TileSlot> applyConstraintsInsideThese) {
-        return Flux.fromIterable(applyConstraintsInsideThese)
-                .flatMap(slot -> slot.getSmartConstraints().map(c -> Tuples.of(slot, c)))
-                .map(pair -> pair.getT2().apply(pair.getT1()))
-                .reduce(grid, this::applyConstraint)
-                .block();
+    private TileSlotGrid constraintApplicationCascade(TileSlotGrid grid, Stream<TileSlot> applyConstraintsInsideThese, ConstraintApplicationHistory applicationHistory) {
+        return applyConstraintsInsideThese
+                .flatMap(this::pairs_slot_itsSmartConstraint)
+                .flatMap(find_constraint_itsTargetSlot.apply(grid).tupled())
+                .flatMap(constraint_updatedTargetSlot.apply(applicationHistory).tupled())
+                .transform(pairs ->
+                        constraintApplicationCascade(
+                                grid,
+                                pairs.map(Tuple2::_2),
+                                applicationHistory.update(pairs)));
 
     }
 
-    private TileSlotGrid applyConstraint(TileSlotGrid grid, Tuple2<Optional<TileSlot>, Constraint> pair) {
-        var target = pair.getT1();
-        var constraint = pair.getT2();
+    private final Function3<ConstraintApplicationHistory, Constraint, TileSlot, Option<Tuple2<Constraint, TileSlot>>> constraint_updatedTargetSlot =
+            Function(this::constraint_updatedTargetSlot);
 
-        if(target.isEmpty()) return grid;
-        var newGrid = grid.copy();
-        newGrid.get(target.get().x, target.get().y).get().apply(Optional.of(constraint));
-        return newGrid;
+    private Option<Tuple2<Constraint, TileSlot>> constraint_updatedTargetSlot(ConstraintApplicationHistory applicationHistory, Constraint constraint, TileSlot tileSlot) {
+        if(applicationHistory.isUnnecessary(tileSlot, constraint))
+            return Option.none();
+        else
+            return Option.of(Tuple(constraint, tileSlot.applyConstraint(constraint)));
     }
 
-    WaveFunctionCollapseSpecific(TileSlotGrid grid) {
-        this.grid = grid;
+    private Stream<Tuple2<TileSlot, SmartConstraint>> pairs_slot_itsSmartConstraint(TileSlot tileSlot) {
+        return Stream(tileSlot).cycle()
+                .zip(tileSlot.getSmartConstraints().toStream());
     }
+
+    private final Function3<TileSlotGrid,TileSlot,SmartConstraint,Option<Tuple2<Constraint,TileSlot>>> find_constraint_itsTargetSlot =
+            Function(this::constraint_itsTarget);
+
+    private Option<Tuple2<Constraint, TileSlot>> constraint_itsTarget(TileSlotGrid grid, TileSlot source, SmartConstraint smartConstraint) {
+        var target_constraint = smartConstraint.getConstraintStemmingFrom(source);
+        var target = target_constraint._1;
+        var constraint = target_constraint._2;
+        return target
+                .map(slot -> slot.applyConstraint(constraint))
+                .map(slot -> Tuple(constraint, slot));
+    }
+
+
 }

@@ -6,7 +6,7 @@ import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGri
 import dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid.ImagesGridViewModel;
 import dev.pschmalz.wave_function_collapse.usecase.*;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
-import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
+import dev.pschmalz.wave_function_collapse.usecase.stereotypes.Usecase;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import processing.core.PApplet;
@@ -26,7 +26,7 @@ public class ViewImpl extends PApplet implements View, Usecase.EventListener {
     @Autowired
     private GenerateTileConstraints generateTileConstraints;
     @Autowired
-    private LoadChosenTileImages loadChosenTileImages;
+    private ChooseTileImages chooseTileImages;
     @Autowired
     private WaveFunctionCollapse waveFunctionCollapse;
     @Autowired
@@ -77,13 +77,13 @@ public class ViewImpl extends PApplet implements View, Usecase.EventListener {
     @Override
     public void handleUsecaseEvent(Usecase.Event usecaseEvent) {
         switch (usecaseEvent.source()) {
-            case LoadChosenTileImages ignored:
+            case ChooseTileImages ignored:
                 if(usecaseEvent.state() == Usecase.State.SUCCESS)
                     generateTileConstraints.run();
                 break;
             case InitTempDirectory initTempDirectory:
                 if(usecaseEvent.state() == Usecase.State.SUCCESS)
-                    loadChosenTileImages.run();
+                    chooseTileImages.run();
                 break;
             case GenerateTileConstraints ignored:
                 if(usecaseEvent.state() == Usecase.State.SUCCESS)

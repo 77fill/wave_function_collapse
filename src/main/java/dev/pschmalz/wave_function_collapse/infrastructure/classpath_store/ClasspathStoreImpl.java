@@ -3,16 +3,19 @@ package dev.pschmalz.wave_function_collapse.infrastructure.classpath_store;
 import com.google.common.reflect.ClassPath;
 import dev.pschmalz.wave_function_collapse.usecase.data.Image;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
+import io.vavr.collection.Seq;
+import io.vavr.collection.Stream;
+import io.vavr.control.Try;
 import jakarta.annotation.PreDestroy;
 import org.apache.commons.lang3.stream.Streams;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.io.Closeable;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static io.vavr.API.Stream;
 
 public class ClasspathStoreImpl implements ClasspathStore {
     private final ClassPath classPath;
@@ -21,14 +24,14 @@ public class ClasspathStoreImpl implements ClasspathStore {
     private final Path projectBasePath;
 
     @Override
-    public Flux<Image> getExampleImages() {
-        return Mono.just(classPath)
-                    .flatMapIterable(ClassPath::getResources)
+    public Try<Stream<Image>> getExampleImages() {
+        return Stream(classPath)
+                    .flatMap(ClassPath::getResources)
                     .map(this::decorate)
                     .filter(DecoratedResource::isExampleImage)
                     .map(DecoratedResource::toImage)
-                    .doOnNext(this::closeImageLater)
-                    .doOnTerminate(this::close);
+                    .transform(Try::sequence)
+                    .map(Seq::toStream);
     }
 
     private DecoratedResource decorate(ClassPath.ResourceInfo resourceInfo) {

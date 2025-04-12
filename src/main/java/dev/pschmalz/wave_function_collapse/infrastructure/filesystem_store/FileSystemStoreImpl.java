@@ -3,7 +3,6 @@ package dev.pschmalz.wave_function_collapse.infrastructure.filesystem_store;
 import dev.pschmalz.wave_function_collapse.domain.Image;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
 import jakarta.annotation.PostConstruct;
-import reactor.core.publisher.Mono;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -15,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import static com.google.common.base.Preconditions.checkState;
+import static io.vavr.API.Tuple;
 
 /**
  * FYI: This is possible: (pseudocode)<br>
@@ -39,17 +39,18 @@ public class FileSystemStoreImpl implements FileSystemStore {
     private final Path tempDir;
 
     @Override
-    public Mono<File> getTempDirectoryPath() {
-        return Mono.just(tempDir.toFile());
+    public File getTempDirectoryPath() {
+        return tempDir.toFile();
     }
 
     @Override
-    public Mono<Image> getImage(File imagePath) {
-        return Mono.just(imagePath)
+    public Image getImage(File imagePath) {
+        return Tuple(imagePath)
                 .map(this::fileToPath)
                 .map(this::newInputStream)
                 .map(this::toBufferedImage)
-                .map(Image::new);
+                .map(Image::new)
+                ._1;
     }
 
     @Override

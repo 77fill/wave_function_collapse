@@ -2,7 +2,7 @@ package dev.pschmalz.wave_function_collapse.usecase;
 
 import dev.pschmalz.wave_function_collapse.domain.MemoryGridStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
-import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
+import dev.pschmalz.wave_function_collapse.usecase.stereotypes.Usecase;
 import reactor.core.Disposable;
 
 import java.util.function.Consumer;

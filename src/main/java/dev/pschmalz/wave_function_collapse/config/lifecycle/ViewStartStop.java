@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.config.auto_start;
+package dev.pschmalz.wave_function_collapse.config.lifecycle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.SmartLifecycle;

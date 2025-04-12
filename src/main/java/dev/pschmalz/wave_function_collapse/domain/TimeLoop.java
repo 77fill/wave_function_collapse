@@ -1,6 +1,5 @@
-package dev.pschmalz.wave_function_collapse.domain_workers.wfc;
+package dev.pschmalz.wave_function_collapse.domain;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.function.BooleanSupplier;
@@ -12,8 +11,7 @@ public class TimeLoop <T> {
     private UnaryOperator<T> convertSomething;
     private BooleanSupplier whileSomething;
     private int maxRepeat;
-    @Autowired
-    private History history;
+
 
     public TimeLoop<T> apply(UnaryOperator<T> convertSomething) {
         this.convertSomething = convertSomething;

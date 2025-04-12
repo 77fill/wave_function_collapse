@@ -1,7 +1,9 @@
 package dev.pschmalz.wave_function_collapse.domain;
 
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
+import io.vavr.collection.HashSet;
+
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 
 public class Image {
     private final BufferedImage bufferedImage;
@@ -25,5 +27,9 @@ public class Image {
 
     public int[] getPixels() {
         return bufferedImage.getRGB(0,0,getWidth(),getHeight(),null,0,getWidth());
+    }
+
+    public Tile toTile() {
+        return new Tile(this, HashSet.empty());
     }
 }

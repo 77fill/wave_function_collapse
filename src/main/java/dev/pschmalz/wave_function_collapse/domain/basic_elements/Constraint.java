@@ -1,6 +1,7 @@
 package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
-import java.util.Collection;
+import io.vavr.collection.Set;
+
 import java.util.function.BinaryOperator;
 import java.util.function.Predicate;
 
@@ -10,7 +11,7 @@ public interface Constraint extends Predicate<Tile> {
         return this.test(target);
     }
 
-    static Constraint allowingOnly(Collection<Tile> allowedTiles) {
+    static Constraint allowingOnly(Set<Tile> allowedTiles) {
         return allowedTiles::contains;
     }
 

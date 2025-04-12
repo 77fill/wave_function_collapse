@@ -1,6 +1,6 @@
 package dev.pschmalz.wave_function_collapse.config.event_glue_code;
 
-import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
+import dev.pschmalz.wave_function_collapse.usecase.stereotypes.Usecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;

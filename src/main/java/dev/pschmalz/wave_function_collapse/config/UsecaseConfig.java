@@ -1,13 +1,14 @@
 package dev.pschmalz.wave_function_collapse.config;
 
-import dev.pschmalz.wave_function_collapse.domain.*;
+import dev.pschmalz.wave_function_collapse.domain.ConstraintAppender;
+import dev.pschmalz.wave_function_collapse.domain.TileSlotGridGenerator;
 import dev.pschmalz.wave_function_collapse.domain.WaveFunctionCollapse;
 import dev.pschmalz.wave_function_collapse.usecase.*;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
-import dev.pschmalz.wave_function_collapse.usecase.sterotypes.Usecase;
+import dev.pschmalz.wave_function_collapse.usecase.stereotypes.Usecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,8 +39,8 @@ public class UsecaseConfig {
     private MemoryGridStore gridStore;
 
     @Bean
-    public LoadChosenTileImages loadChosenTileImages() {
-        return new LoadChosenTileImages(usecaseEventEmitter, fileSystemStore, fileChooser, tileStore);
+    public ChooseTileImages loadChosenTileImages() {
+        return new ChooseTileImages(usecaseEventEmitter, fileSystemStore, fileChooser, tileStore);
     }
 
     @Bean

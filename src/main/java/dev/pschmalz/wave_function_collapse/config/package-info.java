@@ -5,6 +5,6 @@
  * Inside the codebase it's directly in the 'resources' Source Folder<br>
  * <br>
  * Spring starts SmartLifecycle beans (bean.start()) automatically<br>
- * @see dev.pschmalz.wave_function_collapse.config.auto_start
+ * @see dev.pschmalz.wave_function_collapse.config.lifecycle
  */
 package dev.pschmalz.wave_function_collapse.config;

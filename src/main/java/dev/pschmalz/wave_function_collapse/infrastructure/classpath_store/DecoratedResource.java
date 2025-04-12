@@ -2,12 +2,14 @@ package dev.pschmalz.wave_function_collapse.infrastructure.classpath_store;
 
 import com.google.common.reflect.ClassPath;
 import dev.pschmalz.wave_function_collapse.usecase.data.Image;
-import reactor.core.publisher.Mono;
+import io.vavr.control.Try;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.List;
+
+import static io.vavr.API.Try;
+import static io.vavr.control.Option.some;
 
 public class DecoratedResource {
     private final ClassPath.ResourceInfo resourceInfo;
@@ -29,23 +31,16 @@ public class DecoratedResource {
                 && hasAllowedImageSuffix();
     }
 
-    public Image toImage() {
-        return new Image(getName(), getContent());
+    public Try<Image> toImage() {
+        return getContent().map(content -> new Image(getName(), content));
     }
 
     private String getName() {
         return getPath().getFileName().toString();
     }
 
-    private InputStream getContent() {
-        try {
-            var result = resourceInfo.asByteSource().openBufferedStream();
-
-
-            return result;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private Try<InputStream> getContent() {
+        return Try(() -> resourceInfo.asByteSource().openBufferedStream());
     }
 
     private Path getPath() {
@@ -58,14 +53,12 @@ public class DecoratedResource {
     }
 
     private boolean hasAllowedImageSuffix() {
-        return Mono.just(resourceInfo)
+        return some(resourceInfo)
                 .map(ClassPath.ResourceInfo::getResourceName)
                 .map(Path::of)
                 .map(this::getSuffix)
                 .filter(allowedImageSuffixes::contains)
-                .hasElement()
-                .blockOptional()
-                .get();
+                .isDefined();
     }
 
     private String getSuffix(Path path) {
