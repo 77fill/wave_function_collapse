@@ -12,5 +12,6 @@ You may choose images - some examples are included - and generate a new image ba
 - [Maven](https://maven.apache.org/) as a build tool
 - [Lombok](https://projectlombok.org/) as preprocessor for brevity
 - [Processing library](https://processing.org/) for graphics
-- [Git](https://git-scm.com/) for version control 
+- [Git](https://git-scm.com/) for version control
+- [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
