@@ -1,6 +1,6 @@
 package dev.pschmalz.wave_function_collapse.domain.workers;
 
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlotGrid;
 
 import java.util.function.Consumer;
 

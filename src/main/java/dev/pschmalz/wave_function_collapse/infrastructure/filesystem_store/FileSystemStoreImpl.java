@@ -1,6 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.filesystem_store;
 
-import dev.pschmalz.wave_function_collapse.domain.Image;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Image;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
 import jakarta.annotation.PostConstruct;
 

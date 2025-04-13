@@ -1,8 +1,8 @@
-package dev.pschmalz.wave_function_collapse.domain;
+package dev.pschmalz.wave_function_collapse.domain.workers;
 
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlotGrid;
 import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.Function3;

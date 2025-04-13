@@ -1,8 +1,8 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view;
 
-import dev.pschmalz.wave_function_collapse.domain.Image;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Image;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlotGrid;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid.ImagesGridViewModel;
 import dev.pschmalz.wave_function_collapse.usecase.*;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;

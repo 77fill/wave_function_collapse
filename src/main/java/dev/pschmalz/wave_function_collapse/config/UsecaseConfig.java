@@ -1,8 +1,8 @@
 package dev.pschmalz.wave_function_collapse.config;
 
-import dev.pschmalz.wave_function_collapse.domain.ConstraintAppender;
-import dev.pschmalz.wave_function_collapse.domain.TileSlotGridGenerator;
-import dev.pschmalz.wave_function_collapse.domain.WaveFunctionCollapse;
+import dev.pschmalz.wave_function_collapse.domain.workers.ConstraintAppender;
+import dev.pschmalz.wave_function_collapse.domain.workers.TileSlotGridGenerator;
+import dev.pschmalz.wave_function_collapse.domain.workers.WaveFunctionCollapse;
 import dev.pschmalz.wave_function_collapse.usecase.*;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;

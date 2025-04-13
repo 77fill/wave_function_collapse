@@ -6,6 +6,6 @@ import java.io.File;
 
 public interface FileSystemStore {
     File getTempDirectoryPath();
-    dev.pschmalz.wave_function_collapse.domain.Image getImage(File imagePath);
+    dev.pschmalz.wave_function_collapse.domain.basic_elements.Image getImage(File imagePath);
     void addImageToTempDirectory(Image image);
 }

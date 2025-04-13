@@ -1,12 +1,34 @@
 package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
-import lombok.Value;
+import io.vavr.collection.HashSet;
 
-import java.io.File;
+import java.awt.image.BufferedImage;
 
-@Value
 public class Image {
-    int width;
-    int height;
-    File file;
+    private final BufferedImage bufferedImage;
+
+    public Image(BufferedImage bufferedImage) {
+        this.bufferedImage = bufferedImage;
+    }
+
+    public int getWidth() {
+        return bufferedImage.getWidth();
+    }
+
+    public int getHeight() {
+        return bufferedImage.getHeight();
+    }
+
+    public Pixel get(int x, int y) {
+        var p = bufferedImage.getRGB(x,y);
+        return new Pixel(p >> 16, (p >> 8) & 0xff, p & 0xff);
+    }
+
+    public int[] getPixels() {
+        return bufferedImage.getRGB(0,0,getWidth(),getHeight(),null,0,getWidth());
+    }
+
+    public Tile toTile() {
+        return new Tile(this, HashSet.empty());
+    }
 }

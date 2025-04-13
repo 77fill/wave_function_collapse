@@ -1,7 +1,7 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import dev.pschmalz.wave_function_collapse.domain.TileSlotGridGenerator;
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
+import dev.pschmalz.wave_function_collapse.domain.workers.TileSlotGridGenerator;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlotGrid;
 import io.vavr.concurrent.Future;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import static io.vavr.API.Stream;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class WaveFunctionCollapse implements Future<TileSlotGrid> {
     TileSlotGridGenerator tileSlotGridGenerator;
-    dev.pschmalz.wave_function_collapse.domain.WaveFunctionCollapse waveFunctionCollapse;
+    dev.pschmalz.wave_function_collapse.domain.workers.WaveFunctionCollapse waveFunctionCollapse;
     ChooseTileImages chooseTileImages;
     GenerateTileConstraints generateTileConstraints;
 

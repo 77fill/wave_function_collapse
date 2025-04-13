@@ -1,7 +1,5 @@
-package dev.pschmalz.wave_function_collapse.domain.collections_tuples;
+package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import io.vavr.Function1;
 import io.vavr.collection.List;
 import io.vavr.collection.Set;

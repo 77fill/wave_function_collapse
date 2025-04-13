@@ -1,8 +1,11 @@
-package dev.pschmalz.wave_function_collapse.domain;
+package dev.pschmalz.wave_function_collapse.domain.workers;
 
+import dev.pschmalz.wave_function_collapse.domain.util.ConstraintApplicationHistory;
+import dev.pschmalz.wave_function_collapse.domain.util.TimeLoop;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.SmartConstraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlotGrid;
 import io.vavr.Function1;
 import io.vavr.Function3;
 import io.vavr.Tuple2;

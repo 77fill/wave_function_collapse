@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.domain;
+package dev.pschmalz.wave_function_collapse.domain.util;
 
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;

@@ -1,8 +1,6 @@
-package dev.pschmalz.wave_function_collapse.domain;
+package dev.pschmalz.wave_function_collapse.domain.workers;
 
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
-import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.*;
 import io.vavr.Function2;
 import io.vavr.Function3;
 

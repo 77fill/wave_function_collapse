@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.domain;
+package dev.pschmalz.wave_function_collapse.domain.util;
 
 import org.springframework.stereotype.Component;
 

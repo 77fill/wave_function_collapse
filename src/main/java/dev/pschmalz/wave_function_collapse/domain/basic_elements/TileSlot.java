@@ -1,7 +1,5 @@
 package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
-import dev.pschmalz.wave_function_collapse.domain.Image;
-import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
 import io.vavr.Tuple2;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;

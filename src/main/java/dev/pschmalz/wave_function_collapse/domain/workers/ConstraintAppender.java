@@ -1,5 +1,6 @@
-package dev.pschmalz.wave_function_collapse.domain;
+package dev.pschmalz.wave_function_collapse.domain.workers;
 
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.SmartConstraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import io.vavr.Function1;
 import io.vavr.Tuple2;
@@ -32,7 +33,7 @@ public class ConstraintAppender implements Function1<Stream<Tile>,Stream<Tile>> 
         return Stream(tile).cycle().zip(otherTiles);
     }
 
-    private Tuple2<Tile,SmartConstraint> to_tile_constraint(Tile tile, Tile otherTile) {
+    private Tuple2<Tile, SmartConstraint> to_tile_constraint(Tile tile, Tile otherTile) {
         return Tuple(tile, constraintGenerator.apply(tile,otherTile));
     }
 
