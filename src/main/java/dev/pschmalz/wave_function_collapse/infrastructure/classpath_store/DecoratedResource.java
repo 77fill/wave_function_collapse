@@ -2,29 +2,27 @@ package dev.pschmalz.wave_function_collapse.infrastructure.classpath_store;
 
 import com.google.common.reflect.ClassPath;
 import dev.pschmalz.wave_function_collapse.usecase.data.Image;
+import io.vavr.collection.List;
 import io.vavr.control.Try;
+import lombok.Builder;
+import lombok.Value;
 
 import java.io.InputStream;
 import java.nio.file.Path;
-import java.util.List;
+
 
 import static io.vavr.API.Try;
 import static io.vavr.control.Option.some;
 
+@Value
 public class DecoratedResource {
-    private final ClassPath.ResourceInfo resourceInfo;
-    private final List<String> allowedImageSuffixes;
-    private final Path projectBasePath;
+    List<String> allowedImageSuffixes;
+    Path projectBasePath;
+    ClassPath.ResourceInfo resourceInfo;
 
-    private DecoratedResource(ClassPath.ResourceInfo resourceInfo, List<String> allowedImageSuffixes, Path projectBasePath) {
-        this.resourceInfo = resourceInfo;
-        this.allowedImageSuffixes = allowedImageSuffixes;
-        this.projectBasePath = projectBasePath;
-    }
-
-    public static Builder with(List<String> allowedImageSuffixes, Path projectBasePath) {
+    /*public static Builder with(List<String> allowedImageSuffixes, Path projectBasePath) {
         return new Builder(allowedImageSuffixes, projectBasePath);
-    }
+    }*/
 
     public boolean isExampleImage() {
         return isInsideThisProject()
@@ -66,7 +64,7 @@ public class DecoratedResource {
         return segments[segments.length - 1];
     }
 
-    public static class Builder {
+    /*public static class Builder {
         private final List<String> allowedImageSuffixes;
         private final Path projectBasePath;
 
@@ -78,5 +76,5 @@ public class DecoratedResource {
         public DecoratedResource decorate(ClassPath.ResourceInfo resourceInfo) {
             return new DecoratedResource(resourceInfo, allowedImageSuffixes, projectBasePath);
         }
-    }
+    }*/
 }

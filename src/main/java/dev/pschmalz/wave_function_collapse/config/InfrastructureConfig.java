@@ -69,7 +69,7 @@ public class InfrastructureConfig {
 
     @Bean
     public ClasspathStore classpathStore() {
-        return new ClasspathStoreImpl(allowedNameSuffixes, classPath, resourcesBasePath);
+        return new ClasspathStoreImpl(classPath, allowedNameSuffixes, resourcesBasePath);
     }
 
     @Bean
