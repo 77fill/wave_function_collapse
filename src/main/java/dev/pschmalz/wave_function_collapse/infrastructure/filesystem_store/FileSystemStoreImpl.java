@@ -3,6 +3,9 @@ package dev.pschmalz.wave_function_collapse.infrastructure.filesystem_store;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Image;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
 import jakarta.annotation.PostConstruct;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -31,12 +34,14 @@ import static io.vavr.API.Tuple;
  * @see Path#getFileSystem()
  *
  */
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class FileSystemStoreImpl implements FileSystemStore {
     /**
      * For mocking purposes (e.g. virtual filesystem in memory)
      */
-    private final FileSystem fileSystem;
-    private final Path tempDir;
+    FileSystem fileSystem;
+    Path tempDir;
 
     @Override
     public File getTempDirectoryPath() {
@@ -66,6 +71,7 @@ public class FileSystemStoreImpl implements FileSystemStore {
         return fileSystem.getPath(file.getAbsolutePath());
     }
 
+    //TODO use vavr/Try
     private BufferedImage toBufferedImage(InputStream inputStream) {
         try {
             return ImageIO.read(inputStream);
@@ -90,8 +96,4 @@ public class FileSystemStoreImpl implements FileSystemStore {
         checkState(Files.isWritable(tempDir), "directory tempDir is not writable");
     }
 
-    public FileSystemStoreImpl(FileSystem fileSystem, Path tempDir) {
-        this.fileSystem = fileSystem;
-        this.tempDir = tempDir;
-    }
 }
