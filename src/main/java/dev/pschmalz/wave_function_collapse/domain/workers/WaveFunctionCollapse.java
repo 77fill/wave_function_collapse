@@ -7,6 +7,7 @@ import dev.pschmalz.wave_function_collapse.domain.basic_elements.SmartConstraint
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlotGrid;
 import io.vavr.Function1;
+import io.vavr.Function2;
 import io.vavr.Function3;
 import io.vavr.Tuple2;
 import io.vavr.collection.Stream;
@@ -46,7 +47,7 @@ public class WaveFunctionCollapse implements Function1<TileSlotGrid,TileSlotGrid
 
     private TileSlotGrid constraintApplicationCascade(TileSlotGrid grid, Stream<TileSlot> applyConstraintsInsideThese, ConstraintApplicationHistory applicationHistory) {
         return applyConstraintsInsideThese
-                .flatMap(this::pairs_slot_itsSmartConstraint)
+                .flatMap(pairs_slot_itsSmartConstraint.apply(grid))
                 .flatMap(find_constraint_itsTargetSlot.apply(grid).tupled())
                 .flatMap(constraint_updatedTargetSlot.apply(applicationHistory).tupled())
                 .transform(pairs ->
@@ -67,16 +68,17 @@ public class WaveFunctionCollapse implements Function1<TileSlotGrid,TileSlotGrid
             return Option.of(Tuple(constraint, tileSlot.applyConstraint(constraint)));
     }
 
-    private Stream<Tuple2<TileSlot, SmartConstraint>> pairs_slot_itsSmartConstraint(TileSlot tileSlot) {
+    private final Function2<TileSlotGrid,TileSlot,Stream<Tuple2<TileSlot, SmartConstraint>>> pairs_slot_itsSmartConstraint = Function(this::pairs_slot_itsSmartConstraint);
+    private Stream<Tuple2<TileSlot, SmartConstraint>> pairs_slot_itsSmartConstraint(TileSlotGrid grid, TileSlot tileSlot) {
         return Stream(tileSlot).cycle()
-                .zip(tileSlot.getSmartConstraints().toStream());
+                .zip(tileSlot.getSmartConstraints(grid).toStream());
     }
 
     private final Function3<TileSlotGrid,TileSlot,SmartConstraint,Option<Tuple2<Constraint,TileSlot>>> find_constraint_itsTargetSlot =
             Function(this::constraint_itsTarget);
 
     private Option<Tuple2<Constraint, TileSlot>> constraint_itsTarget(TileSlotGrid grid, TileSlot source, SmartConstraint smartConstraint) {
-        var target_constraint = smartConstraint.getConstraintStemmingFrom(source);
+        var target_constraint = smartConstraint.apply(grid,source);
         var target = target_constraint._1;
         var constraint = target_constraint._2;
         return target

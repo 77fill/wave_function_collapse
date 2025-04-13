@@ -52,6 +52,14 @@ public class TileSlot implements Comparable<TileSlot> {
 
     }
 
+    public Set<SmartConstraint> getSmartConstraints(TileSlotGrid grid) {
+        return possibleTiles
+                .flatMap(Tile::getConstraints)
+                .slideBy(smartConstraint -> smartConstraint.apply(grid, this)._1)
+                .map(SmartConstraint::or)
+                .toSet();
+    }
+
 
     public TileSlot applyConstraint(Constraint constraint) {
         return withPossibleTiles(possibleTiles.filter(constraint));
