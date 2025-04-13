@@ -2,40 +2,56 @@ package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_gr
 
 import com.google.common.collect.Streams;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.Scene;
+import io.vavr.Function3;
+import io.vavr.collection.Stream;
+import io.vavr.control.Option;
+import jakarta.annotation.PostConstruct;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Delegate;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
+import processing.core.PApplet;
 import processing.core.PVector;
 
-import java.util.Optional;
-import java.util.stream.Stream;
+import static io.vavr.API.Function;
 
 
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ImagesGrid implements Scene {
-    private final ImagesGridViewModel viewModel;
-    private final PAppletDecorator p;
+    ImagesGridViewModel viewModel;
+    PApplet pApplet;
 
-    public ImagesGrid(ImagesGridViewModel viewModel, PAppletDecorator p) {
-        this.viewModel = viewModel;
-        this.p = p;
+    @Delegate
+    @NonFinal
+    PAppletDecorator pAppletDecorator;
+
+    @PostConstruct
+    public void init() {
+        pAppletDecorator = new PAppletDecorator(pApplet, viewModel);
     }
 
     @Override
     public void draw() {
-        p.background(viewModel.getBackground());
+        background(viewModel.getBackground());
 
-        Streams.zip(positions(), viewModel.getImages(), PositionedImage::new)
+        positions().zipWith(viewModel.getImages(), PositionedImage::new)
                 .filter(PositionedImage::hasSpace)
-                .forEachOrdered(p::drawPositionedImage);
+                .map(drawPositionedImage.apply(viewModel.getSize(), viewModel.getSize()));
     }
 
-    private Stream<Optional<PVector>> positions() {
+    private Stream<Option<PVector>> positions() {
         return Stream.iterate(
                     PositionInsideGrid.firstPosition(viewModel),
                     pos -> pos.isRightmost()?
                                 pos.toTheNextRow()
                                 : pos.toTheRight())
                 .map(pos -> pos.isOverLowerEdge()?
-                                null
-                                :pos)
-                .map(Optional::ofNullable);
+                                Option.none()
+                                :Option.of(pos));
     }
+
+    private final Function3<Integer, Integer, PositionedImage, Void> drawPositionedImage = Function(this::drawPositionedImage);
 
 }

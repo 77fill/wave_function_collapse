@@ -8,6 +8,11 @@ import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
 import dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
+import io.vavr.Tuple2;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import processing.core.PApplet;
@@ -17,31 +22,24 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ViewImpl extends PApplet implements View {
-    private final ViewModel viewModel;
-    private final ImagesGridViewModel imagesGridViewModel;
-    private final ImmutablePair<Integer, Integer> initSize;
-    private Optional<Scene> currentScene = Optional.empty();
-    private final Queue<Runnable> displayQueue = new ConcurrentLinkedQueue<>();
+    ViewModel viewModel;
+    ImagesGridViewModel imagesGridViewModel;
+    Tuple2<Integer,Integer> initSize;
+    GenerateTileConstraints generateTileConstraints;
+    ChooseTileImages chooseTileImages;
+    WaveFunctionCollapse waveFunctionCollapse;
 
-    @Autowired
-    private GenerateTileConstraints generateTileConstraints;
-    @Autowired
-    private ChooseTileImages chooseTileImages;
-    @Autowired
-    private WaveFunctionCollapse waveFunctionCollapse;
-
+    @NonFinal
+    Optional<Scene> currentScene = Optional.empty();
+    Queue<Runnable> displayQueue = new ConcurrentLinkedQueue<>();
 
     @Override
     public void settings() {
-        size(initSize.getLeft(), initSize.getRight());
+        size(initSize._1, initSize._2);
         noSmooth();
-    }
-
-    public ViewImpl(ViewModel viewModel, ImagesGridViewModel imagesGridViewModel, ImmutablePair<Integer, Integer> initSize) {
-        this.viewModel = viewModel;
-        this.imagesGridViewModel = imagesGridViewModel;
-        this.initSize = initSize;
     }
 
     @Override
@@ -54,24 +52,6 @@ public class ViewImpl extends PApplet implements View {
         viewModel.getCurrentScene().ifPresent(Scene::draw);
 
         displayQueue.forEach(Runnable::run);
-    }
-
-    @Override
-    public void showImage(Image image) {
-        var pImage = new PImage(image.getWidth(), image.getHeight(), image.getPixels(), false, this);
-        imagesGridViewModel.addImage(pImage);
-    }
-
-    @Override
-    public void showGrid(TileSlotGrid grid) {
-        grid.tileSlots()
-                .map(TileSlot::getImage)
-                .map(this::fromImage)
-                .forEach(imagesGridViewModel::addImage);
-    }
-
-    private PImage fromImage(Image image) {
-        return new PImage(image.getWidth(), image.getHeight(), image.getPixels(), false, this);
     }
 
 

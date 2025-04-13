@@ -1,24 +1,24 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
 
+import io.vavr.Function3;
+import static io.vavr.API.Function;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Delegate;
+import lombok.experimental.FieldDefaults;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
 
+@RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class PAppletDecorator {
-    private final PApplet pApplet;
-    private PVector upperLeft;
-    private int width, height;
-
-    public PAppletDecorator(PApplet pApplet, PVector upperLeft, int width, int height) {
-        this.pApplet = pApplet;
-        this.upperLeft = upperLeft.copy();
-        this.width = width;
-        this.height = height;
-    }
+    PApplet pApplet;
+    ImagesGridViewModel viewModel;
 
     private void afterTranslate(Runnable drawThis) {
         pApplet.pushMatrix();
-        pApplet.translate(upperLeft.x, upperLeft.y);
+        pApplet.translate(viewModel.getUpperLeft().x, viewModel.getUpperLeft().y);
 
         drawThis.run();
 
@@ -29,18 +29,21 @@ public class PAppletDecorator {
         afterTranslate(() -> {
             pApplet.rectMode(PConstants.CORNER);
             pApplet.fill(background);
-            pApplet.rect(0, 0, width, height);
+            pApplet.rect(0, 0, viewModel.getWidth(), viewModel.getHeight());
         });
     }
 
-    public void drawPositionedImage(PositionedImage positionedImage) {
+
+    public Void drawPositionedImage(int width, int height, PositionedImage positionedImage) {
         afterTranslate(() -> {
             pApplet.image(
                     positionedImage.getImage(),
                     positionedImage.getX(),
                     positionedImage.getY(),
-                    positionedImage.getWidth(),
-                    positionedImage.getHeight());
+                    width,
+                    height);
         });
+
+        return null;
     }
 }

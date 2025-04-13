@@ -1,26 +1,17 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
 
+import io.vavr.control.Option;
+import lombok.Value;
 import processing.core.PImage;
 import processing.core.PVector;
 
-import java.util.Optional;
-
+@Value
 public class PositionedImage {
-    private final Optional<PVector> position;
-    private final PImage image;
-    private int width, height;
-
-    public PositionedImage(Optional<PVector> position, PImage image) {
-        this.image = image;
-        this.position = position;
-    }
+    Option<PVector> position;
+    PImage image;
 
     public boolean hasSpace() {
-        return position.isPresent();
-    }
-
-    public PImage getImage() {
-        return image;
+        return position.isDefined();
     }
 
     public float getX() {
@@ -29,13 +20,5 @@ public class PositionedImage {
 
     public float getY() {
         return position.get().y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 }
