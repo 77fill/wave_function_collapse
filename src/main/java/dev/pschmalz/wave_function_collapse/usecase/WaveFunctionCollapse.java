@@ -32,7 +32,7 @@ public class WaveFunctionCollapse implements Future<TileSlotGrid> {
         return Stream(chooseTileImages.get())
                     .map(generateTileConstraints)
                     .map(tileSlotGridGenerator.withSize.apply(20,20))
-                    .flatMap(waveFunctionCollapse)
+                    .map(waveFunctionCollapse)
                     .get();
 
     }
