@@ -1,6 +1,8 @@
 package dev.pschmalz.wave_function_collapse.domain.basic_elements;
 
 import dev.pschmalz.wave_function_collapse.domain.Image;
+import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
+import io.vavr.Tuple2;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import lombok.Value;
@@ -58,6 +60,22 @@ public class TileSlot implements Comparable<TileSlot> {
     }
 
     public enum Direction {
-        UP, DOWN, LEFT, RIGHT
+        UP, DOWN, LEFT, RIGHT;
+
+        private Tuple2<Integer,Integer> xy(TileSlot source) {
+            var currentXY = Tuple(source.x, source.y);
+
+            return Match(this).of(
+                    Case($(UP), currentXY.map2(y -> y-1)),
+                    Case($(DOWN), currentXY.map2(y -> y+1)),
+                    Case($(LEFT), currentXY.map1(x -> x-1)),
+                    Case($(RIGHT), currentXY.map1(x -> x+1))
+            );
+        }
+
+        public Option<TileSlot> getNeighbor(TileSlotGrid grid, TileSlot source) {
+            var xy = xy(source);
+            return grid.get(xy._1, xy._2);
+        }
     }
 }

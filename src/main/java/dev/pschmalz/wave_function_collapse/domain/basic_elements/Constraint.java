@@ -7,6 +7,10 @@ import java.util.function.Predicate;
 
 public interface Constraint extends Predicate<Tile> {
 
+    static Constraint forbidden(Tile forbiddenTile) {
+        return tile -> !tile.equals(forbiddenTile);
+    }
+
     default boolean isFulfilledBy(Tile target) {
         return this.test(target);
     }

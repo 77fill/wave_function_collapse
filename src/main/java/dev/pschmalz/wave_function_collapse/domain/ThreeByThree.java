@@ -3,58 +3,41 @@ package dev.pschmalz.wave_function_collapse.domain;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
-import reactor.util.function.Tuple2;
-import reactor.util.function.Tuples;
+import io.vavr.Function2;
+import io.vavr.Function3;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import io.vavr.Tuple2;
+import io.vavr.collection.Array;
+import io.vavr.collection.Set;
+import io.vavr.collection.Stream;
 
-import static java.util.stream.IntStream.range;
+import static io.vavr.API.*;
+import static io.vavr.collection.Stream.range;
 
 public class ThreeByThree implements ConstraintGenerator {
     @Override
     public Set<SmartConstraint> apply(Tile tile, Tile otherTile) {
-        return new ThreeByThreeSpecific(tile, otherTile).getConstraints();
-    }
-}
-
-class ThreeByThreeSpecific {
-    private final Tile tile, otherTile;
-
-    ThreeByThreeSpecific(Tile tile, Tile otherTile) {
-        this.tile = tile;
-        this.otherTile = otherTile;
-    }
-
-    public Set<SmartConstraint> getConstraints() {
         return Edge.all()
-                .map(this::toEdgeAndPermission)
-                .map(this::toSmartConstraint)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+                .map(toPermission.apply(tile,otherTile))
+                .zip(Edge.all())
+                .filter(permission_edge -> !permission_edge._1)
+                .map(Tuple2::_2)
+                .map(toSmartConstraint.apply(otherTile))
+                .toSet();
     }
 
-
-    private Tuple2<Edge, Boolean> toEdgeAndPermission(Edge edge) {
-        return Tuples.of(
-                edge,
-                Arrays.equals(
-                        edge.of(tile.getImage()),
-                        edge.opposite.of(otherTile.getImage())));
+    private final Function3<Tile,Tile,Edge,Boolean> toPermission = Function(this::toPermission);
+    private boolean toPermission(Tile tile, Tile otherTile, Edge edge) {
+        return edge.of(tile.getImage())
+                .equals(
+                        edge.opposite.of(otherTile.getImage()));
     }
 
-    private Optional<SmartConstraint> toSmartConstraint(Tuple2<Edge, Boolean> edgeAndPermission) {
-        if(edgeAndPermission.getT2().equals(true))
-            return Optional.empty();
-
-        var edge = edgeAndPermission.getT1();
-
-        Constraint constraint = tile -> !tile.equals(otherTile);
-        return Optional.of(tileSlot -> Tuples.of(tileSlot.getNeighbor(edge.direction), constraint));
+    private final Function2<Tile,Edge,SmartConstraint> toSmartConstraint = Function(this::toSmartConstraint);
+    private SmartConstraint toSmartConstraint(Tile forbiddenTile, Edge edge) {
+        return (grid, sourceTileSlot) -> Tuple(
+                edge.direction.getNeighbor(grid, sourceTileSlot),
+                Constraint.forbidden(forbiddenTile));
     }
 }
 
@@ -77,24 +60,21 @@ enum Edge {
     }
 
     static Stream<Edge> all() {
-        return Arrays.stream(values());
+        return Stream.of(values());
     }
 
-    Pixel[] of(Image image) {
-        Stream<Pixel> p;
+    Array<Pixel> of(Image image) {
         var width = image.getWidth();
         var height = image.getHeight();
         var maxX = width-1;
         var maxY = height-1;
 
-        switch (this) {
-            case UP -> p = range(0, width).mapToObj(x -> image.get(x, 0));
-            case DOWN -> p = range(0, width).mapToObj(x -> image.get(x, maxY));
-            case LEFT -> p = range(0, height).mapToObj(y -> image.get(0, y));
-            case RIGHT -> p = range(0, height).mapToObj(y -> image.get(maxX, y));
-            default -> throw new IllegalStateException();
-        }
+        return Match(this).of(
+                Case($(UP), range(0, width).map(x -> image.get(x, 0))),
+                Case($(DOWN), range(0, width).map(x -> image.get(x, maxY))),
+                Case($(LEFT), range(0, height).map(y -> image.get(0, y))),
+                Case($(RIGHT), range(0, height).map(y -> image.get(maxX, y)))
+        ).toArray();
 
-        return p.toArray(Pixel[]::new);
     }
 }

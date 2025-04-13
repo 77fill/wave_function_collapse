@@ -2,16 +2,12 @@ package dev.pschmalz.wave_function_collapse.domain;
 
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
+import dev.pschmalz.wave_function_collapse.domain.collections_tuples.TileSlotGrid;
+import io.vavr.Function2;
 import io.vavr.Tuple2;
 import io.vavr.control.Option;
 
-import java.util.function.Function;
 
-public interface SmartConstraint extends Function<TileSlot, Tuple2<Option<TileSlot>, Constraint>> {
-    default Tuple2<Option<TileSlot>, Constraint> getConstraintStemmingFrom(TileSlot source) {
-        return apply(source);
-    }
+public interface SmartConstraint extends Function2<TileSlotGrid, TileSlot, Tuple2<Option<TileSlot>, Constraint>> {
 
-    @Override
-    Tuple2<Option<TileSlot>, Constraint> apply(TileSlot source);
 }
