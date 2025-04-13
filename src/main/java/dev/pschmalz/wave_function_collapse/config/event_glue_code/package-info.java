@@ -34,4 +34,5 @@
  *              Glue code: ApplicationListener delegates to Usecase.Listeners
  * </pre>
  */
+@Deprecated
 package dev.pschmalz.wave_function_collapse.config.event_glue_code;
