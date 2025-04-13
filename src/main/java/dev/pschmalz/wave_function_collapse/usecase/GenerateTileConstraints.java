@@ -1,7 +1,7 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import dev.pschmalz.wave_function_collapse.domain.workers.ConstraintAppender;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
+import dev.pschmalz.wave_function_collapse.domain.workers.ConstraintAppender;
 import io.vavr.Function1;
 import io.vavr.collection.Set;
 import io.vavr.collection.Stream;

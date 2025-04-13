@@ -1,7 +1,7 @@
 package dev.pschmalz.wave_function_collapse.usecase;
 
-import dev.pschmalz.wave_function_collapse.domain.workers.TileSlotGridGenerator;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlotGrid;
+import dev.pschmalz.wave_function_collapse.domain.workers.TileSlotGridGenerator;
 import io.vavr.concurrent.Future;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
