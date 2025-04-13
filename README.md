@@ -15,3 +15,8 @@ You may choose images - some examples are included - and generate a new image ba
 - [Git](https://git-scm.com/) for version control
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
+## How to read/understand the code
+
+- Make sure you get acquainted with the above technologies
+- Read the `package-info.java` files
+- Read the unit tests for examples (TODO)
