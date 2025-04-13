@@ -1,9 +1,6 @@
 package dev.pschmalz.wave_function_collapse.config;
 
-import dev.pschmalz.wave_function_collapse.domain.workers.ConstraintAppender;
-import dev.pschmalz.wave_function_collapse.domain.workers.ConstraintGenerator;
-import dev.pschmalz.wave_function_collapse.domain.workers.TileSlotGridGenerator;
-import dev.pschmalz.wave_function_collapse.domain.workers.WaveFunctionCollapse;
+import dev.pschmalz.wave_function_collapse.domain.workers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,22 +19,12 @@ public class DomainConfig {
 
     @Bean
     public ConstraintGenerator defaultConstraintGenerator() {
-        return null;
+        return new ThreeByThree();
     }
 
     @Bean
     public WaveFunctionCollapse constraintApplicationCascade() {
         return new WaveFunctionCollapse();
-    }
-
-    @Bean
-    public MemoryGridStore gridStore() {
-        return new MemoryGridStore();
-    }
-
-    @Bean
-    public MemoryTileStore tileStore() {
-        return new MemoryTileStore();
     }
 
     @Bean

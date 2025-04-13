@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ViewImpl extends PApplet implements View, Usecase.EventListener {
+public class ViewImpl extends PApplet implements View {
     private final ViewModel viewModel;
     private final ImagesGridViewModel imagesGridViewModel;
     private final ImmutablePair<Integer, Integer> initSize;
@@ -29,8 +29,7 @@ public class ViewImpl extends PApplet implements View, Usecase.EventListener {
     private ChooseTileImages chooseTileImages;
     @Autowired
     private WaveFunctionCollapse waveFunctionCollapse;
-    @Autowired
-    private ShowTileSlotGrid showTileSlotGrid;
+
 
     @Override
     public void settings() {
@@ -74,26 +73,5 @@ public class ViewImpl extends PApplet implements View, Usecase.EventListener {
         return new PImage(image.getWidth(), image.getHeight(), image.getPixels(), false, this);
     }
 
-    @Override
-    public void handleUsecaseEvent(Usecase.Event usecaseEvent) {
-        switch (usecaseEvent.source()) {
-            case ChooseTileImages ignored:
-                if(usecaseEvent.state() == Usecase.State.SUCCESS)
-                    generateTileConstraints.run();
-                break;
-            case InitTempDirectory initTempDirectory:
-                if(usecaseEvent.state() == Usecase.State.SUCCESS)
-                    chooseTileImages.run();
-                break;
-            case GenerateTileConstraints ignored:
-                if(usecaseEvent.state() == Usecase.State.SUCCESS)
-                    waveFunctionCollapse.run();
-                break;
-            case WaveFunctionCollapse ignored:
-                if(usecaseEvent.state() == Usecase.State.SUCCESS)
-                    showTileSlotGrid.run();
-                break;
-            default: ;
-        }
-    }
+
 }
