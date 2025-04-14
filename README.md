@@ -21,3 +21,12 @@ You may choose images - some examples are included - and generate a new image ba
 - Read the `package-info.java` files
 - Abstract Mothers might have explanation comments!
 - Read the unit tests for examples (TODO)
+
+## Principles
+
+- Points are relative to the upper left corner of the element where they are used (see [RelativeElement](src/main/java/dev/pschmalz/wave_function_collapse/infrastructure/view/RelativeElement.java))
+
+## FAQ
+
+Q: The entrypoint doesn't seem to start the View / PApplet. Where does it happen?<br>
+A: Look at the package [config/lifecycle](src/main/java/dev/pschmalz/wave_function_collapse/config/lifecycle/package-info.java)
