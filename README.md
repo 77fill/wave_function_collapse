@@ -19,4 +19,5 @@ You may choose images - some examples are included - and generate a new image ba
 
 - Make sure you get acquainted with the above technologies
 - Read the `package-info.java` files
+- Abstract Mothers might have explanation comments!
 - Read the unit tests for examples (TODO)

@@ -18,11 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ViewImpl extends PApplet implements View {
     ViewModel viewModel;
-    ImagesGridViewModel imagesGridViewModel;
     Tuple2<Integer,Integer> initSize;
-    GenerateTileConstraints generateTileConstraints;
-    ChooseTileImages chooseTileImages;
-    WaveFunctionCollapse waveFunctionCollapse;
 
     Queue<Runnable> displayQueue = new ConcurrentLinkedQueue<>();
 
@@ -44,5 +40,8 @@ public class ViewImpl extends PApplet implements View {
         displayQueue.forEach(Runnable::run);
     }
 
+    @Override
+    public void mouseClicked() {
 
+    }
 }
