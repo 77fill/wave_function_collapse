@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view;
 
+import dev.pschmalz.wave_function_collapse.infrastructure.view.menu.Menu;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid.ImagesGridViewModel;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
@@ -19,6 +20,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class ViewImpl extends PApplet implements View {
     ViewModel viewModel;
     Tuple2<Integer,Integer> initSize;
+    Menu menu;
 
     Queue<Runnable> displayQueue = new ConcurrentLinkedQueue<>();
 
@@ -35,6 +37,7 @@ public class ViewImpl extends PApplet implements View {
 
     @Override
     public void draw() {
+        menu.draw();
         viewModel.getCurrentScene().peek(Scene::draw);
 
         displayQueue.forEach(Runnable::run);

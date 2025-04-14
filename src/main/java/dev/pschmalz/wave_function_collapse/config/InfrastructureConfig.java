@@ -6,6 +6,8 @@ import dev.pschmalz.wave_function_collapse.infrastructure.file_chooser.FileChoos
 import dev.pschmalz.wave_function_collapse.infrastructure.filesystem_store.FileSystemStoreImpl;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.ViewImpl;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.ViewModel;
+import dev.pschmalz.wave_function_collapse.infrastructure.view.menu.Menu;
+import dev.pschmalz.wave_function_collapse.infrastructure.view.menu.MenuViewModel;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid.ImagesGrid;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid.ImagesGridViewModel;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
@@ -84,7 +86,17 @@ public class InfrastructureConfig {
 
     @Bean
     public ViewImpl view() {
-        return new ViewImpl(viewModel(), imagesGridViewModel(), Tuple(0,0),generateTileConstraints, chooseTileImages, waveFunctionCollapse);
+        return new ViewImpl(viewModel(), Tuple(1000,1000), menu());
+    }
+
+    @Bean
+    public Menu menu() {
+        return new Menu(new PVector(0,0), view(), menuViewModel());
+    }
+
+    @Bean
+    public MenuViewModel menuViewModel() {
+        return new MenuViewModel(new PVector(0,0), chooseTileImages, generateTileConstraints, waveFunctionCollapse, 200, 1000, 255, 10, 10, 30, 150);
     }
 
     @Bean
