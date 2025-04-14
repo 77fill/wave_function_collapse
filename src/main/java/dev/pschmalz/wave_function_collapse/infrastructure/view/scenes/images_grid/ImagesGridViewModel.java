@@ -1,8 +1,10 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
 
 import io.vavr.collection.List;
-import io.vavr.collection.Stream;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import processing.core.PImage;
 import processing.core.PVector;

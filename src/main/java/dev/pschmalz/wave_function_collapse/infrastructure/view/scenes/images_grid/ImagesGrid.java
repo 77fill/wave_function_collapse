@@ -1,6 +1,5 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
 
-import com.google.common.collect.Streams;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.Scene;
 import io.vavr.Function3;
 import io.vavr.collection.Stream;

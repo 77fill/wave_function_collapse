@@ -4,12 +4,10 @@ import com.google.common.reflect.ClassPath;
 import dev.pschmalz.wave_function_collapse.usecase.data.Image;
 import io.vavr.collection.List;
 import io.vavr.control.Try;
-import lombok.Builder;
 import lombok.Value;
 
 import java.io.InputStream;
 import java.nio.file.Path;
-
 
 import static io.vavr.API.Try;
 import static io.vavr.control.Option.some;

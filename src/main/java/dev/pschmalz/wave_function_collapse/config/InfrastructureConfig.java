@@ -14,7 +14,6 @@ import dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
-import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import io.vavr.collection.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +26,6 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 
 import static io.vavr.API.Tuple;
 

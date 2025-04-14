@@ -1,11 +1,9 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.file_chooser;
 
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;
-import io.vavr.Function1;
 import io.vavr.collection.Stream;
 import io.vavr.control.Option;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 

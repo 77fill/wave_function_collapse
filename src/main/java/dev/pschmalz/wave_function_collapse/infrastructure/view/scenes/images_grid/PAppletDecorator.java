@@ -1,14 +1,10 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
 
-import io.vavr.Function3;
-import static io.vavr.API.Function;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.Delegate;
 import lombok.experimental.FieldDefaults;
 import processing.core.PApplet;
 import processing.core.PConstants;
-import processing.core.PVector;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
