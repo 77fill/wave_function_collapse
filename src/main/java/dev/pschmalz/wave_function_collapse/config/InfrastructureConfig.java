@@ -17,6 +17,7 @@ import dev.pschmalz.wave_function_collapse.usecase.interfaces.ClasspathStore;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileChooser;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.FileSystemStore;
 import io.vavr.collection.List;
+import io.vavr.control.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static io.vavr.API.Option;
 import static io.vavr.API.Tuple;
 
 @Configuration
@@ -101,7 +103,7 @@ public class InfrastructureConfig {
 
     @Bean
     public ViewModel viewModel() {
-        return new ViewModel();
+        return new ViewModel(Option.none(), new PVector(200,0));
     }
 
     @Bean

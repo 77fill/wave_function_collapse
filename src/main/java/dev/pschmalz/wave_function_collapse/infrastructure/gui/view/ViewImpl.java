@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import processing.core.PApplet;
+import processing.core.PVector;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -42,6 +43,10 @@ public class ViewImpl extends PApplet implements View {
 
     @Override
     public void mouseClicked() {
+        var mousePosition = new PVector(mouseX, mouseY);
 
+        menu.mouseClicked(PVector.sub(mousePosition, menu.getUpperLeft()));
+        viewModel.getCurrentScene().peek(
+                scene -> scene.mouseClicked(PVector.sub(mousePosition, viewModel.getSceneUpperLeft())));
     }
 }
