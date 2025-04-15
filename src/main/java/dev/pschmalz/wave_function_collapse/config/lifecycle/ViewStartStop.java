@@ -19,7 +19,7 @@ public class ViewStartStop implements SmartLifecycle {
 
     @Override
     public void stop() {
-        pApplet.stop();
+        pApplet.exit();
         running = false;
     }
 
