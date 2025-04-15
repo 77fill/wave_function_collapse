@@ -1,9 +1,13 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel;
 
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.ImageUtil;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.Property;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.images_grid.ImagesGrid;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
 import dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse;
+import io.vavr.control.Option;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +20,9 @@ import processing.core.PVector;
 @Getter
 @Setter
 public class MenuViewModel {
+    ImagesGridViewModel imagesGridViewModel;
+    ViewModel mainViewModel;
+    ImagesGrid imagesGrid;
     PVector upperLeft;
     final ChooseTileImages chooseTileImages;
     final GenerateTileConstraints generateTileConstraints;
@@ -30,6 +37,7 @@ public class MenuViewModel {
 
     public Void handleChooseTileImages() {
         chooseTileImages.run();
+        chooseTileImages.andThen(attempt -> attempt.andThen(() -> showTileImagesActive.setValue(true)));
         return null;
     }
 
@@ -41,6 +49,7 @@ public class MenuViewModel {
 
     public Void handleWaveFunctionCollapse() {
         waveFunctionCollapse.run();
+        waveFunctionCollapse.andThen(attempt -> attempt.andThen(() -> showGridActive.setValue(true)));
         return null;
     }
 
@@ -50,7 +59,8 @@ public class MenuViewModel {
     }
 
     public Void handleShowTileImages() {
-
+        imagesGridViewModel.setImages(chooseTileImages.get().toList().map(Tile::getImage).map(ImageUtil::toPImage));
+        mainViewModel.setCurrentScene(Option.of(imagesGrid));
         return null;
     }
 }

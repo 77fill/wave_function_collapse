@@ -5,12 +5,14 @@ import io.vavr.control.Option;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import processing.core.PVector;
 
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
+@Setter
 public class ViewModel {
     volatile Option<Scene> currentScene = Option.none();
     volatile PVector sceneUpperLeft;

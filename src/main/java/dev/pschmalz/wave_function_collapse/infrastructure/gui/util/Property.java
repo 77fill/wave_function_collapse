@@ -19,7 +19,7 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Property<T> {
     @Getter
-    T value;
+    volatile T value;
     Option<Property<T>> bindingProperty = Option.none();
     Set<Property<T>> boundProperties = new HashSet<>();
 
