@@ -4,15 +4,13 @@ import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.Property;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.MouseAwareElement;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.RelativeElement;
 import io.vavr.Function0;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import processing.core.PApplet;
 import processing.core.PVector;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 @Builder
 public class Button extends RelativeElement implements MouseAwareElement {
@@ -21,6 +19,8 @@ public class Button extends RelativeElement implements MouseAwareElement {
     @Getter
     PVector upperLeft;
     @Getter
+    @Setter
+    @NonFinal
     PApplet pApplet;
     int width, height;
     Property<Boolean> active = new Property<>(false);

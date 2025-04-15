@@ -27,7 +27,6 @@ public class Menu extends RelativeElement implements MouseAwareElement {
     PVector upperLeft;
     @Getter
     @NonFinal
-    @Setter
     PApplet pApplet;
     MenuViewModel viewModel; //TODO explain points / coordinates
 
@@ -49,7 +48,6 @@ public class Menu extends RelativeElement implements MouseAwareElement {
                         .width(viewModel.getButtonWidth())
                         .height(viewModel.getButtonHeight())
                         .upperLeft(viewModel.nextButtonUpperLeft(buttons.size()))
-                        .pApplet(pApplet)
                 .build();
 
         button.activeProperty().bind(active);
@@ -78,5 +76,10 @@ public class Menu extends RelativeElement implements MouseAwareElement {
     private boolean isInside(PVector position) {
         return 0 <= position.x && position.x < viewModel.getWidth()
                 && 0 <= position.y && position.y < viewModel.getHeight();
+    }
+
+    public void setPApplet(PApplet pApplet) {
+        this.pApplet = pApplet;
+        buttons.forEach(button -> button.setPApplet(pApplet));
     }
 }
