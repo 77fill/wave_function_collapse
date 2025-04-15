@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @PropertySource(value = "classpath:config.yml", factory = YamlPropertySourceFactory.class)
 @EnableAsync
 public class Main {
-
+    //TODO project "standard" ...
     public static void main(String[] args) throws Exception {
         var appContext = new AnnotationConfigApplicationContext(Main.class);
 

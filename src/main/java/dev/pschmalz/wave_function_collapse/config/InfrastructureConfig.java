@@ -33,6 +33,7 @@ import java.nio.file.Path;
 
 import static io.vavr.API.Tuple;
 
+//TODO use lombok in configs
 @Configuration
 public class InfrastructureConfig {
     @Value("${view.images-grid.distance-between}")
