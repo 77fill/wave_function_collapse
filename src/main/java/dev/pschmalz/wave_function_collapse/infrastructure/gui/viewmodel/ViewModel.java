@@ -1,6 +1,5 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel;
 
-import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.Scene;
 import io.vavr.control.Option;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,6 +13,9 @@ import processing.core.PVector;
 @Getter
 @Setter
 public class ViewModel {
-    volatile Option<Scene> currentScene = Option.none();
+    volatile Scene currentScene;
     volatile PVector sceneUpperLeft;
+    public enum Scene {
+        None, ImagesGrid
+    }
 }

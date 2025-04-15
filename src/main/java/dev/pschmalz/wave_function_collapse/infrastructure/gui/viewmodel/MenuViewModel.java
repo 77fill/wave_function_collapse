@@ -18,7 +18,6 @@ import processing.core.PVector;
 public class MenuViewModel {
     final ImagesGridViewModel imagesGridViewModel;
     final ViewModel mainViewModel;
-    final ImagesGrid imagesGrid;
     PVector upperLeft;
     final ChooseTileImages chooseTileImages;
     final GenerateTileConstraints generateTileConstraints;
@@ -31,13 +30,12 @@ public class MenuViewModel {
             showGridActive = new Property<>(false),
             showTileImagesActive = new Property<>(false);
 
-    public MenuViewModel(PVector upperLeft, int width, int height, ImagesGridViewModel imagesGridViewModel, ViewModel mainViewModel, ImagesGrid imagesGrid, ChooseTileImages chooseTileImages, GenerateTileConstraints generateTileConstraints, WaveFunctionCollapse waveFunctionCollapse) {
+    public MenuViewModel(PVector upperLeft, int width, int height, ImagesGridViewModel imagesGridViewModel, ViewModel mainViewModel, ChooseTileImages chooseTileImages, GenerateTileConstraints generateTileConstraints, WaveFunctionCollapse waveFunctionCollapse) {
         this.upperLeft = upperLeft;
         this.width = width;
         this.height = height;
         this.imagesGridViewModel = imagesGridViewModel;
         this.mainViewModel = mainViewModel;
-        this.imagesGrid = imagesGrid;
         this.chooseTileImages = chooseTileImages;
         this.generateTileConstraints = generateTileConstraints;
         this.waveFunctionCollapse = waveFunctionCollapse;
@@ -68,7 +66,7 @@ public class MenuViewModel {
 
     public Void handleShowTileImages() {
         imagesGridViewModel.setImages(chooseTileImages.get().toList().map(Tile::getImage).map(ImageUtil::toPImage));
-        mainViewModel.setCurrentScene(Option.of(imagesGrid));
+        mainViewModel.setCurrentScene(ViewModel.Scene.ImagesGrid);
         return null;
     }
 }

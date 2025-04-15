@@ -23,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 import javax.swing.*;
@@ -89,12 +91,17 @@ public class InfrastructureConfig {
 
     @Bean
     public ViewImpl view() {
-        return new ViewImpl(viewModel(), Tuple(1000,1000), menu());
+        var view = new ViewImpl(viewModel(), Tuple(1000,1000), imagesGrid(), menu());
+
+        imagesGrid().setPApplet(view);
+        menu().setPApplet(view);
+
+        return view;
     }
 
     @Bean
     public Menu menu() {
-        return new Menu(new PVector(0,0), view(), menuViewModel());
+        return new Menu(new PVector(0,0), menuViewModel());
     }
 
     @Bean
@@ -105,7 +112,6 @@ public class InfrastructureConfig {
                 height,
                 imagesGridViewModel(),
                 viewModel(),
-                imagesGrid(),
                 chooseTileImages,
                 generateTileConstraints,
                 waveFunctionCollapse);
@@ -113,12 +119,12 @@ public class InfrastructureConfig {
 
     @Bean
     public ViewModel viewModel() {
-        return new ViewModel(Option.none(), new PVector(200,0));
+        return new ViewModel(ViewModel.Scene.None, new PVector(200,0));
     }
 
     @Bean
     public ImagesGrid imagesGrid() {
-        return new ImagesGrid(imagesGridViewModel(), view());
+        return new ImagesGrid(imagesGridViewModel());
     }
 
     @Bean

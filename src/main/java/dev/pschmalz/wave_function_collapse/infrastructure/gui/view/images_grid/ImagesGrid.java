@@ -8,9 +8,11 @@ import io.vavr.control.Option;
 import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Delegate;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import org.springframework.beans.factory.annotation.Autowired;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -21,6 +23,8 @@ import static io.vavr.API.Function;
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ImagesGrid implements Scene {
     ImagesGridViewModel viewModel;
+    @NonFinal
+    @Setter
     PApplet pApplet;
 
     @Delegate

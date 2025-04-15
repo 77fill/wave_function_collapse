@@ -17,7 +17,7 @@ public class GeneralConfig {
     }
 
     @Bean
-    public JFileChooser fileChooser() {
+    public JFileChooser jFileChooser() {
         var fileChooser = new JFileChooser();
 
         fileChooser.setMultiSelectionEnabled(true);
