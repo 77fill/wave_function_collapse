@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view.menu;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel;
 
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;

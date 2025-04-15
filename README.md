@@ -24,7 +24,7 @@ You may choose images - some examples are included - and generate a new image ba
 
 ## Principles
 
-- Points are relative to the upper left corner of the element where they are used (see [RelativeElement](src/main/java/dev/pschmalz/wave_function_collapse/infrastructure/view/RelativeElement.java))
+- Points are relative to the upper left corner of the element where they are used (see [RelativeElement](src/main/java/dev/pschmalz/wave_function_collapse/infrastructure/gui/RelativeElement.java))
 
 ## FAQ
 

@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel;
 
 import io.vavr.collection.List;
 import lombok.AccessLevel;

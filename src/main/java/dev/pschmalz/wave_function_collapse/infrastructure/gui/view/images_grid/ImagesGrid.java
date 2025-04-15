@@ -1,6 +1,7 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.view.images_grid;
 
-import dev.pschmalz.wave_function_collapse.infrastructure.view.Scene;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.Scene;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ImagesGridViewModel;
 import io.vavr.Function3;
 import io.vavr.collection.Stream;
 import io.vavr.control.Option;

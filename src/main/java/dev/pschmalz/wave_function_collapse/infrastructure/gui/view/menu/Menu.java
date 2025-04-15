@@ -1,7 +1,8 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view.menu;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.view.menu;
 
-import dev.pschmalz.wave_function_collapse.infrastructure.view.MouseAwareElement;
-import dev.pschmalz.wave_function_collapse.infrastructure.view.RelativeElement;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.MouseAwareElement;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.RelativeElement;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.MenuViewModel;
 import io.vavr.Function0;
 import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;

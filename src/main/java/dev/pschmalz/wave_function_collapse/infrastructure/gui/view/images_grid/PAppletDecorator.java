@@ -1,5 +1,6 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.view.images_grid;
 
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ImagesGridViewModel;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;

@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.view;
 
 import lombok.experimental.Delegate;
 import processing.core.PApplet;

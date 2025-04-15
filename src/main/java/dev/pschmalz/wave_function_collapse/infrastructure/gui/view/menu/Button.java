@@ -1,7 +1,7 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view.menu;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.view.menu;
 
-import dev.pschmalz.wave_function_collapse.infrastructure.view.MouseAwareElement;
-import dev.pschmalz.wave_function_collapse.infrastructure.view.RelativeElement;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.MouseAwareElement;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.RelativeElement;
 import io.vavr.Function0;
 import lombok.AccessLevel;
 import lombok.Builder;

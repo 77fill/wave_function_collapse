@@ -1,4 +1,4 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.view.images_grid;
 
 import io.vavr.control.Option;
 import lombok.Value;

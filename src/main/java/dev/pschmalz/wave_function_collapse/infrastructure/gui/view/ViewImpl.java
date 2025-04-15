@@ -1,6 +1,7 @@
-package dev.pschmalz.wave_function_collapse.infrastructure.view;
+package dev.pschmalz.wave_function_collapse.infrastructure.gui.view;
 
-import dev.pschmalz.wave_function_collapse.infrastructure.view.menu.Menu;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ViewModel;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.menu.Menu;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import io.vavr.Tuple2;
 import lombok.AccessLevel;
