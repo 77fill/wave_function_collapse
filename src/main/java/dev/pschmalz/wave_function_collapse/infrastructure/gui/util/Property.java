@@ -16,7 +16,6 @@ import java.util.Set;
  * where: text & coolText are Property < String ><br>
  * now you can change both values by using either <code>text#setValue()</code> or <code>coolText#setValue()</code>
  */
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Property<T> {
     @Getter
@@ -53,6 +52,10 @@ public class Property<T> {
     }
 
     private void changedEvent(T value) {
+        this.value = value;
+    }
+
+    public Property(T value) {
         this.value = value;
     }
 }

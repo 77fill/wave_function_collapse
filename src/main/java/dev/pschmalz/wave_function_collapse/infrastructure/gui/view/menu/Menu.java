@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.gui.view.menu;
 
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.Property;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.MouseAwareElement;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.RelativeElement;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.MenuViewModel;
@@ -29,14 +30,14 @@ public class Menu extends RelativeElement implements MouseAwareElement {
 
     @PostConstruct
     public void init() {
-        button("Choose 3x3 Tile Images", viewModel::handleChooseTileImages);
-        button("Show Tile Images", viewModel::handleShowTileImages);
-        button("Wave Function Collapse", viewModel::handleWaveFunctionCollapse);
-        button("Show Grid", viewModel::handleShowGrid);
+        button("Choose 3x3 Tile Images", viewModel::handleChooseTileImages, viewModel.getChooseTileImagesActive());
+        button("Show Tile Images", viewModel::handleShowTileImages, viewModel.getShowTileImagesActive());
+        button("Wave Function Collapse", viewModel::handleWaveFunctionCollapse, viewModel.getWaveFunctionCollapseActive());
+        button("Show Grid", viewModel::handleShowGrid, viewModel.getShowGridActive());
     }
 
-    private void button(String text, Function0<Void> clickHandler) {
-        buttons.add(
+    private void button(String text, Function0<Void> clickHandler, Property<Boolean> active) {
+        var button =
                 Button.builder()
                         .text(text)
                         .clickHandler(clickHandler)
@@ -44,7 +45,11 @@ public class Menu extends RelativeElement implements MouseAwareElement {
                         .height(viewModel.getButtonHeight())
                         .upperLeft(viewModel.nextButtonUpperLeft(buttons.size()))
                         .pApplet(pApplet)
-                .build());
+                .build();
+
+        button.activeProperty().bind(active);
+
+        buttons.add(button);
     }
 
     private void background(int color) {

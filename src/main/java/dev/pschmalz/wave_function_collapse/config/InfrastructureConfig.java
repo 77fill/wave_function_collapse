@@ -4,6 +4,7 @@ import com.google.common.reflect.ClassPath;
 import dev.pschmalz.wave_function_collapse.infrastructure.classpath_store.ClasspathStoreImpl;
 import dev.pschmalz.wave_function_collapse.infrastructure.file_chooser.FileChooserImpl;
 import dev.pschmalz.wave_function_collapse.infrastructure.filesystem_store.FileSystemStoreImpl;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.Property;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.ViewImpl;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ViewModel;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.menu.Menu;
@@ -98,7 +99,22 @@ public class InfrastructureConfig {
 
     @Bean
     public MenuViewModel menuViewModel() {
-        return new MenuViewModel(new PVector(0,0), chooseTileImages, generateTileConstraints, waveFunctionCollapse, 200, 1000, 255, 10, 10, 30, 150);
+        return new MenuViewModel(
+                new PVector(0,0),
+                chooseTileImages,
+                generateTileConstraints,
+                waveFunctionCollapse,
+                200,
+                1000,
+                255,
+                10,
+                10,
+                30,
+                150,
+                new Property<>(true),
+                new Property<>(false),
+                new Property<>(false),
+                new Property<>(false));
     }
 
     @Bean

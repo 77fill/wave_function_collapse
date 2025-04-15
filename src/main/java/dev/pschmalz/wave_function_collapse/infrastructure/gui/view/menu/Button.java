@@ -1,5 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.gui.view.menu;
 
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.Property;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.MouseAwareElement;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.RelativeElement;
 import io.vavr.Function0;
@@ -22,7 +23,7 @@ public class Button extends RelativeElement implements MouseAwareElement {
     @Getter
     PApplet pApplet;
     int width, height;
-    boolean active;
+    Property<Boolean> active = new Property<>(false);
 
     @Override
     protected void relativeDraw() {
@@ -34,12 +35,24 @@ public class Button extends RelativeElement implements MouseAwareElement {
     public void mouseClicked(PVector relativeMousePosition) {
         if(!isInside(relativeMousePosition)) return;
 
-        if(active)
+        if(active.getValue())
             clickHandler.apply();
     }
 
     private boolean isInside(PVector relativeMousePosition) {
         return 0 <= relativeMousePosition.x && relativeMousePosition.x < width
                 && 0 <= relativeMousePosition.y && relativeMousePosition.y < height;
+    }
+
+    public boolean isActive() {
+        return active.getValue();
+    }
+
+    public void setActive(boolean active) {
+        this.active.setValue(active);
+    }
+
+    public Property<Boolean> activeProperty() {
+        return active;
     }
 }
