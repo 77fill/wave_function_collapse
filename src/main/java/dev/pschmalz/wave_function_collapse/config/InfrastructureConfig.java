@@ -31,7 +31,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static io.vavr.API.Option;
 import static io.vavr.API.Tuple;
 
 @Configuration
@@ -101,20 +100,14 @@ public class InfrastructureConfig {
     public MenuViewModel menuViewModel() {
         return new MenuViewModel(
                 new PVector(0,0),
+                200,
+                height,
+                imagesGridViewModel(),
+                viewModel(),
+                imagesGrid(),
                 chooseTileImages,
                 generateTileConstraints,
-                waveFunctionCollapse,
-                200,
-                1000,
-                255,
-                10,
-                10,
-                30,
-                150,
-                new Property<>(true),
-                new Property<>(false),
-                new Property<>(false),
-                new Property<>(false));
+                waveFunctionCollapse);
     }
 
     @Bean
@@ -129,6 +122,14 @@ public class InfrastructureConfig {
 
     @Bean
     public ImagesGridViewModel imagesGridViewModel() {
-        return new ImagesGridViewModel(List.empty(), distanceBetween, distanceEdge, size, background, width, height, new PVector(upperLeftX, upperLeftY));
+        return new ImagesGridViewModel(
+                List.empty(),
+                distanceBetween,
+                distanceEdge,
+                size,
+                background,
+                width,
+                height,
+                new PVector(upperLeftX, upperLeftY));
     }
 }

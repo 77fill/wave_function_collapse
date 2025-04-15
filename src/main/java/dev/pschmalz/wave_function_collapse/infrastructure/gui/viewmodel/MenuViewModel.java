@@ -8,32 +8,40 @@ import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
 import dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse;
 import io.vavr.control.Option;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import processing.core.PVector;
 
-@AllArgsConstructor
 @FieldDefaults(makeFinal = false, level = AccessLevel.PRIVATE)
 @Getter
 @Setter
 public class MenuViewModel {
-    ImagesGridViewModel imagesGridViewModel;
-    ViewModel mainViewModel;
-    ImagesGrid imagesGrid;
+    final ImagesGridViewModel imagesGridViewModel;
+    final ViewModel mainViewModel;
+    final ImagesGrid imagesGrid;
     PVector upperLeft;
     final ChooseTileImages chooseTileImages;
     final GenerateTileConstraints generateTileConstraints;
     final WaveFunctionCollapse waveFunctionCollapse;
-    int width, height, background;
+    int width, height, background = 255;
     int distanceEdge = 10, buttonSpacing = 10, buttonHeight = 30, buttonWidth = 100;
     Property<Boolean>
             chooseTileImagesActive = new Property<>(true),
             waveFunctionCollapseActive = new Property<>(false),
             showGridActive = new Property<>(false),
             showTileImagesActive = new Property<>(false);
+
+    public MenuViewModel(PVector upperLeft, int width, int height, ImagesGridViewModel imagesGridViewModel, ViewModel mainViewModel, ImagesGrid imagesGrid, ChooseTileImages chooseTileImages, GenerateTileConstraints generateTileConstraints, WaveFunctionCollapse waveFunctionCollapse) {
+        this.upperLeft = upperLeft;
+        this.width = width;
+        this.height = height;
+        this.imagesGridViewModel = imagesGridViewModel;
+        this.mainViewModel = mainViewModel;
+        this.imagesGrid = imagesGrid;
+        this.chooseTileImages = chooseTileImages;
+        this.generateTileConstraints = generateTileConstraints;
+        this.waveFunctionCollapse = waveFunctionCollapse;
+    }
 
     public Void handleChooseTileImages() {
         chooseTileImages.run();
