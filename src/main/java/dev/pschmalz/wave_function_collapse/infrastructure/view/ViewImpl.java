@@ -1,10 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view;
 
 import dev.pschmalz.wave_function_collapse.infrastructure.view.menu.Menu;
-import dev.pschmalz.wave_function_collapse.infrastructure.view.scenes.images_grid.ImagesGridViewModel;
-import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
-import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
-import dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import io.vavr.Tuple2;
 import lombok.AccessLevel;

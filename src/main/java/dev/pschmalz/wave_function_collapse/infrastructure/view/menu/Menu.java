@@ -3,14 +3,11 @@ package dev.pschmalz.wave_function_collapse.infrastructure.view.menu;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.MouseAwareElement;
 import dev.pschmalz.wave_function_collapse.infrastructure.view.RelativeElement;
 import io.vavr.Function0;
-
-
 import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 import processing.core.PApplet;
 import processing.core.PVector;
 

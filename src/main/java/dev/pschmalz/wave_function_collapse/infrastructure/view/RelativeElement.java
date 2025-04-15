@@ -1,9 +1,6 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.view;
 
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
-import lombok.experimental.FieldDefaults;
 import processing.core.PApplet;
 import processing.core.PVector;
 
