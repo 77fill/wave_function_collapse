@@ -31,6 +31,7 @@ public class Property<T> {
     public void bind(Property<T> otherProperty) {
         bindingProperty = Option.of(otherProperty);
         otherProperty.registerBoundProperty(this);
+        changedEvent(otherProperty.getValue());
     }
 
     public void unbind() {

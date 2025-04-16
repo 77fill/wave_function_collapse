@@ -34,7 +34,7 @@ public class UsecaseConfig {
 
 
     @Bean
-    public ChooseTileImages loadChosenTileImages() {
+    public ChooseTileImages chooseTileImages() {
         return new ChooseTileImages(fileSystemStore, fileChooser);
     }
 
@@ -50,7 +50,7 @@ public class UsecaseConfig {
 
     @Bean
     public dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse waveFunctionCollapse() {
-        return new dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse(tileSlotGridGenerator, waveFunctionCollapse, loadChosenTileImages(), generateTileConstraints());
+        return new dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse(tileSlotGridGenerator, waveFunctionCollapse, chooseTileImages(), generateTileConstraints());
     }
 
 }
