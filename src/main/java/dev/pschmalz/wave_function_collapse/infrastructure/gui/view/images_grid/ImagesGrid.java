@@ -12,7 +12,6 @@ import lombok.Setter;
 import lombok.experimental.Delegate;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
-import org.springframework.beans.factory.annotation.Autowired;
 import processing.core.PApplet;
 import processing.core.PVector;
 

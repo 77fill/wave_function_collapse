@@ -1,13 +1,12 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.gui.view;
 
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.images_grid.ImagesGrid;
-import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ViewModel;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.menu.Menu;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ViewModel;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import io.vavr.Tuple2;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.Delegate;
 import lombok.experimental.FieldDefaults;
 import processing.core.PApplet;
 import processing.core.PVector;

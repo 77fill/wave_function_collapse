@@ -2,7 +2,6 @@ package dev.pschmalz.wave_function_collapse.infrastructure.gui.util;
 
 import io.vavr.control.Option;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 

@@ -3,12 +3,12 @@ package dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.ImageUtil;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.Property;
-import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.images_grid.ImagesGrid;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
 import dev.pschmalz.wave_function_collapse.usecase.GenerateTileConstraints;
 import dev.pschmalz.wave_function_collapse.usecase.WaveFunctionCollapse;
-import io.vavr.control.Option;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import processing.core.PVector;
 
@@ -23,7 +23,7 @@ public class MenuViewModel {
     final GenerateTileConstraints generateTileConstraints;
     final WaveFunctionCollapse waveFunctionCollapse;
     int width, height, background = 255;
-    int distanceEdge = 10, buttonSpacing = 10, buttonHeight = 30, buttonWidth = 100;
+    int distanceEdge = 10, buttonSpacing = 10, buttonHeight = 30, buttonWidth = 150;
     Property<Boolean>
             chooseTileImagesActive = new Property<>(true),
             waveFunctionCollapseActive = new Property<>(false),
