@@ -28,7 +28,7 @@ public class InfrastructureConfig {
     @Value("${bundled-resources.allowed-name-suffixes}")
     private List<String> allowedNameSuffixes;
     @Value("${bundled-resources.base-path}")
-    private Path resourcesBasePath;
+    private String resourcesBasePath;
     @Value("${file-system.temp-dir-prefix}")
     private String tempDirPrefix;
 

@@ -28,7 +28,7 @@ public class ClasspathStoreImpl implements ClasspathStore {
     ClassPath classPath;
     List<String> allowedNameSuffixes;
     Set<Closeable> closeables = new HashSet<>();
-    Path projectBasePath;
+    String projectBasePath;
 
     @Override
     public Try<Stream<Image>> getExampleImages() {
@@ -42,7 +42,7 @@ public class ClasspathStoreImpl implements ClasspathStore {
                     .andThen(images -> images.forEach(this::closeImageLater));
     }
 
-    private final Function3<List<String>,Path, ClassPath.ResourceInfo,DecoratedResource>
+    private final Function3<List<String>,String, ClassPath.ResourceInfo,DecoratedResource>
         newDecoratedResource = Function(DecoratedResource::new);
 
     private void closeImageLater(Image image) {

@@ -15,7 +15,7 @@ import static io.vavr.control.Option.some;
 @Value
 public class DecoratedResource {
     List<String> allowedImageSuffixes;
-    Path projectBasePath;
+    String projectBasePath;
     ClassPath.ResourceInfo resourceInfo;
 
     /*public static Builder with(List<String> allowedImageSuffixes, Path projectBasePath) {
@@ -44,8 +44,7 @@ public class DecoratedResource {
     }
 
     private boolean isInsideThisProject() {
-        return getPath()
-                .startsWith(this.projectBasePath);
+        return resourceInfo.getResourceName().startsWith(projectBasePath);
     }
 
     private boolean hasAllowedImageSuffix() {
