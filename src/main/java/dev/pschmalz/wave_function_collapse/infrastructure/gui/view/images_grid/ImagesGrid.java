@@ -13,9 +13,13 @@ import lombok.experimental.Delegate;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import processing.core.PApplet;
+import processing.core.PImage;
 import processing.core.PVector;
 
+import java.util.stream.Collectors;
+
 import static io.vavr.API.Function;
+import static io.vavr.API.List;
 
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ImagesGrid implements Scene {
@@ -41,7 +45,8 @@ public class ImagesGrid implements Scene {
 
         positions().zipWith(viewModel.getImages(), PositionedImage::new)
                 .filter(PositionedImage::hasSpace)
-                .map(drawPositionedImage.apply(viewModel.getSize(), viewModel.getSize()));
+                .map(drawPositionedImage.apply(viewModel.getSize(), viewModel.getSize()))
+                .forEach(v ->{});
     }
 
     private Stream<Option<PVector>> positions() {
@@ -52,7 +57,7 @@ public class ImagesGrid implements Scene {
                                 : pos.toTheRight())
                 .map(pos -> pos.isOverLowerEdge()?
                                 Option.none()
-                                :Option.of(pos));
+                                :Option.of(pos.getPVector()));
     }
 
     private final Function3<Integer, Integer, PositionedImage, Void> drawPositionedImage = Function(this::drawPositionedImage);

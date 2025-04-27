@@ -2,6 +2,7 @@ package dev.pschmalz.wave_function_collapse.infrastructure.gui.view.images_grid;
 
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ImagesGridViewModel;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import lombok.experimental.FieldDefaults;
@@ -10,9 +11,9 @@ import processing.core.PVector;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
-public class PositionInsideGrid extends PVector {
+public class PositionInsideGrid {
 
-    @Delegate
+    @Getter
     PVector pVector;
     ImagesGridViewModel viewModel;
 
