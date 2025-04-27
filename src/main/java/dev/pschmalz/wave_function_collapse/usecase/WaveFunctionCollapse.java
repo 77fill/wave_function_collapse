@@ -28,6 +28,13 @@ public class WaveFunctionCollapse implements Future<TileSlotGrid> {
         future = Future(this::computation);
     }
 
+    @Override
+    public Future<TileSlotGrid> await() {
+        run();
+
+        return future.await();
+    }
+
     private TileSlotGrid computation() {
         return Stream(chooseTileImages.get())
                     .map(generateTileConstraints)

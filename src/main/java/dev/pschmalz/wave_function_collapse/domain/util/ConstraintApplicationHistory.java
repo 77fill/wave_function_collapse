@@ -4,6 +4,7 @@ import dev.pschmalz.wave_function_collapse.domain.basic_elements.Constraint;
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import io.vavr.Function1;
 import io.vavr.Tuple2;
+import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import io.vavr.collection.Set;
 import io.vavr.collection.Stream;
@@ -25,7 +26,7 @@ public class ConstraintApplicationHistory {
                         .getOrElse(false);
     }
 
-    public ConstraintApplicationHistory update(Stream<Tuple2<Constraint, TileSlot>> applications) {
+    public ConstraintApplicationHistory update(List<Tuple2<Constraint, TileSlot>> applications) {
         return new ConstraintApplicationHistory(
             this.applications.merge(
                     applications.slideBy(Tuple2::_2)

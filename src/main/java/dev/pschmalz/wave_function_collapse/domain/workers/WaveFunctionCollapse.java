@@ -10,6 +10,7 @@ import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.Function3;
 import io.vavr.Tuple2;
+import io.vavr.collection.List;
 import io.vavr.collection.Stream;
 import io.vavr.control.Option;
 import lombok.AccessLevel;
@@ -42,10 +43,13 @@ public class WaveFunctionCollapse implements Function1<TileSlotGrid,TileSlotGrid
         var targetTileSlot = grid.getWithLeastPossibilities();
         var newGrid = grid.randomCollapse(targetTileSlot).get();
 
-        return constraintApplicationCascade(newGrid, Stream(targetTileSlot), ConstraintApplicationHistory.empty());
+        return constraintApplicationCascade(newGrid, List(targetTileSlot), ConstraintApplicationHistory.empty());
     }
 
-    private TileSlotGrid constraintApplicationCascade(TileSlotGrid grid, Stream<TileSlot> applyConstraintsInsideThese, ConstraintApplicationHistory applicationHistory) {
+    private TileSlotGrid constraintApplicationCascade(TileSlotGrid grid, List<TileSlot> applyConstraintsInsideThese, ConstraintApplicationHistory applicationHistory) {
+        if(applyConstraintsInsideThese.isEmpty())
+            return grid;
+
         return applyConstraintsInsideThese
                 .flatMap(pairs_slot_itsSmartConstraint.apply(grid))
                 .flatMap(find_constraint_itsTargetSlot.apply(grid).tupled())
@@ -82,7 +86,6 @@ public class WaveFunctionCollapse implements Function1<TileSlotGrid,TileSlotGrid
         var target = target_constraint._1;
         var constraint = target_constraint._2;
         return target
-                .map(slot -> slot.applyConstraint(constraint))
                 .map(slot -> Tuple(constraint, slot));
     }
 
