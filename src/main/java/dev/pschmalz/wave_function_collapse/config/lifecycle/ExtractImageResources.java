@@ -23,7 +23,7 @@ public class ExtractImageResources implements SmartLifecycle {
     @Override
     public void start() {
         running = true;
-        initTempDirectory.run();
+        initTempDirectory.await();
         running = false;
     }
 
