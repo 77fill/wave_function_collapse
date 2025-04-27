@@ -12,6 +12,11 @@ public class ViewStartStop implements SmartLifecycle {
     private volatile boolean running = false;
 
     @Override
+    public int getPhase() {
+        return ExtractImageResources.PHASE + 100;
+    }
+
+    @Override
     public void start() {
         running = true;
         PApplet.runSketch(new String[] {"", ""}, pApplet);
