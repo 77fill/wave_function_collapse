@@ -48,7 +48,7 @@ public class MenuViewModel {
         chooseTileImages.andThen(attempt -> attempt.andThen(
                 () -> {
                     showTileImagesActive.setValue(true);
-                    showGridActive.setValue(true);
+                    waveFunctionCollapseActive.setValue(true);
                 }));
         return null;
     }
