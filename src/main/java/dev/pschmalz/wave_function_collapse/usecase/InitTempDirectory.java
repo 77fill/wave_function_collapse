@@ -30,4 +30,11 @@ public class InitTempDirectory implements Future<Void> {
     public void run() {
         future = Future(this::computation);
     }
+
+    @Override
+    public Future<Void> await() {
+        run();
+
+        return future.await();
+    }
 }
