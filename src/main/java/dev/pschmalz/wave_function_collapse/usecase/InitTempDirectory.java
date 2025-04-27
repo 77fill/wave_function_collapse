@@ -9,6 +9,8 @@ import lombok.experimental.Delegate;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 
+import java.io.IOException;
+
 import static io.vavr.API.Future;
 
 @RequiredArgsConstructor
@@ -25,6 +27,12 @@ public class InitTempDirectory implements Future<Void> {
         classpathStore.getExampleImages()
                 .andThen(images -> images.forEach(fileSystemStore::addImageToTempDirectory))
                 .getOrNull();
+        try {
+            classpathStore.close();
+        } catch (IOException e) {
+            System.out.println("IOException in InitTempDirectory");
+            throw new RuntimeException(e);
+        }
         return null;
     };
 

@@ -1,5 +1,5 @@
 bundled-resources:
-  base-path: /dev/pschmalz/wave_function_collapse
+  base-path: dev/pschmalz/wave_function_collapse
   allowed-name-suffixes: png
 file-system:
   temp-dir-prefix: wave_function_collapse

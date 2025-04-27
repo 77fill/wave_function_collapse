@@ -61,7 +61,9 @@ public class FileSystemStoreImpl implements FileSystemStore {
     @Override
     public void addImageToTempDirectory(dev.pschmalz.wave_function_collapse.usecase.data.Image image) {
         try {
+            System.out.println("addImageToTempDirectory name: "+image.name());
             Files.copy(image.content(), tempDir.resolve(image.name()));
+            System.out.printf("file: %s -> Done%n", image.name());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
