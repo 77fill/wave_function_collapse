@@ -17,10 +17,10 @@ import processing.core.PVector;
 
 import static io.vavr.API.Function;
 
-
-@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class ImagesGrid implements Scene {
+    @Setter
+    @NonFinal
     ImagesGridViewModel viewModel;
     @NonFinal
     @Setter
@@ -57,4 +57,7 @@ public class ImagesGrid implements Scene {
 
     private final Function3<Integer, Integer, PositionedImage, Void> drawPositionedImage = Function(this::drawPositionedImage);
 
+    public ImagesGrid(ImagesGridViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 }

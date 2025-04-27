@@ -1,6 +1,7 @@
 package dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel;
 
 import dev.pschmalz.wave_function_collapse.domain.basic_elements.Tile;
+import dev.pschmalz.wave_function_collapse.domain.basic_elements.TileSlot;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.ImageUtil;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.util.Property;
 import dev.pschmalz.wave_function_collapse.usecase.ChooseTileImages;
@@ -16,7 +17,7 @@ import processing.core.PVector;
 @Getter
 @Setter
 public class MenuViewModel {
-    final ImagesGridViewModel imagesGridViewModel;
+    final ImagesGridViewModel imagesGridViewModel, tileSlotGridViewModel;
     final ViewModel mainViewModel;
     PVector upperLeft;
     final ChooseTileImages chooseTileImages;
@@ -30,7 +31,8 @@ public class MenuViewModel {
             showGridActive = new Property<>(false),
             showTileImagesActive = new Property<>(false);
 
-    public MenuViewModel(PVector upperLeft, int width, int height, ImagesGridViewModel imagesGridViewModel, ViewModel mainViewModel, ChooseTileImages chooseTileImages, GenerateTileConstraints generateTileConstraints, WaveFunctionCollapse waveFunctionCollapse) {
+    public MenuViewModel(ImagesGridViewModel tileSlotGridViewModel, PVector upperLeft, int width, int height, ImagesGridViewModel imagesGridViewModel, ViewModel mainViewModel, ChooseTileImages chooseTileImages, GenerateTileConstraints generateTileConstraints, WaveFunctionCollapse waveFunctionCollapse) {
+        this.tileSlotGridViewModel = tileSlotGridViewModel;
         this.upperLeft = upperLeft;
         this.width = width;
         this.height = height;
@@ -60,7 +62,11 @@ public class MenuViewModel {
     }
 
     public Void handleShowGrid() {
-
+        var slotGrid = waveFunctionCollapse.get();
+        tileSlotGridViewModel.setImages(slotGrid.tileSlots().map(TileSlot::getImage).map(ImageUtil::toPImage).toList());
+        tileSlotGridViewModel.setHeight(slotGrid.getHeight()* tileSlotGridViewModel.getSize());
+        tileSlotGridViewModel.setWidth(slotGrid.getWidth()* tileSlotGridViewModel.getSize());
+        mainViewModel.setCurrentScene(ViewModel.Scene.TileSlotGrid);
         return null;
     }
 

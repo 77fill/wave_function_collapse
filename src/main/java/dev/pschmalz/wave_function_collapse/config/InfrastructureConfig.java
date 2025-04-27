@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import processing.core.PVector;
 
 import javax.swing.*;
@@ -87,7 +88,7 @@ public class InfrastructureConfig {
 
     @Bean
     public ViewImpl view() {
-        var view = new ViewImpl(viewModel(), Tuple(1000,1000), imagesGrid(), menu());
+        var view = new ViewImpl(viewModel(), Tuple(1000,1000), imagesGrid(), imagesGridViewModel(), tileSlotGridViewModel(), menu());
 
         imagesGrid().setPApplet(view);
         menu().setPApplet(view);
@@ -103,6 +104,7 @@ public class InfrastructureConfig {
     @Bean
     public MenuViewModel menuViewModel() {
         return new MenuViewModel(
+                tileSlotGridViewModel(),
                 new PVector(0,0),
                 200,
                 height,
@@ -124,12 +126,26 @@ public class InfrastructureConfig {
     }
 
     @Bean
+    @Primary
     public ImagesGridViewModel imagesGridViewModel() {
         return new ImagesGridViewModel(
                 List.empty(),
                 distanceBetween,
                 distanceEdge,
                 size,
+                background,
+                width,
+                height,
+                new PVector(upperLeftX, upperLeftY));
+    }
+
+    @Bean
+    public ImagesGridViewModel tileSlotGridViewModel() {
+        return new ImagesGridViewModel(
+                List.empty(),
+                0,
+                distanceEdge,
+                10,
                 background,
                 width,
                 height,

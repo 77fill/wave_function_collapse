@@ -15,6 +15,6 @@ public class ViewModel {
     volatile Scene currentScene;
     volatile PVector sceneUpperLeft;
     public enum Scene {
-        None, ImagesGrid
+        None, ImagesGrid, TileSlotGrid
     }
 }

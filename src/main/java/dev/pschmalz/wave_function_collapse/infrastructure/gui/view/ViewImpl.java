@@ -2,6 +2,7 @@ package dev.pschmalz.wave_function_collapse.infrastructure.gui.view;
 
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.images_grid.ImagesGrid;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.view.menu.Menu;
+import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ImagesGridViewModel;
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ViewModel;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import io.vavr.Tuple2;
@@ -20,6 +21,7 @@ public class ViewImpl extends PApplet implements View {
     ViewModel viewModel;
     Tuple2<Integer,Integer> initSize;
     ImagesGrid imagesGrid;
+    ImagesGridViewModel imagesGridViewModel, tileSlotGridViewModel;
     Menu menu;
 
     Queue<Runnable> displayQueue = new ConcurrentLinkedQueue<>();
@@ -40,7 +42,8 @@ public class ViewImpl extends PApplet implements View {
         menu.draw();
         switch(viewModel.getCurrentScene()) {
             case None -> {}
-            case ImagesGrid -> imagesGrid.draw();
+            case ImagesGrid -> {imagesGrid.setViewModel(imagesGridViewModel); imagesGrid.draw();}
+            case TileSlotGrid -> {imagesGrid.setViewModel(tileSlotGridViewModel); imagesGrid.draw();}
         }
 
         displayQueue.forEach(Runnable::run);
