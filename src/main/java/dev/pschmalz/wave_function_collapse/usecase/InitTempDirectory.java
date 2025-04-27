@@ -23,7 +23,8 @@ public class InitTempDirectory implements Future<Void> {
 
     private Void computation() {
         classpathStore.getExampleImages()
-                .andThen(images -> images.forEach(fileSystemStore::addImageToTempDirectory));
+                .andThen(images -> images.forEach(fileSystemStore::addImageToTempDirectory))
+                .getOrNull();
         return null;
     };
 
