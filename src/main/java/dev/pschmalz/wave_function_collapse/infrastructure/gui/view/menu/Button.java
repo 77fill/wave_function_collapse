@@ -27,10 +27,17 @@ public class Button extends RelativeElement implements MouseAwareElement {
 
     @Override
     protected void relativeDraw() {
-        fill(100);
-        rect(0,0,width,height);
-        fill(0);
-        text(text, 5, height-5);
+        if(active.getValue()) {
+            fill(200);
+            rect(0,0,width,height);
+            fill(0);
+            text(text, 5, height-5);
+        } else {
+            fill(100);
+            rect(0,0,width,height);
+            fill(0);
+            text(text, 5, height-5);
+        }
     }
 
     @Override

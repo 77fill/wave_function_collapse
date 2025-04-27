@@ -45,7 +45,11 @@ public class MenuViewModel {
 
     public Void handleChooseTileImages() {
         chooseTileImages.run();
-        chooseTileImages.andThen(attempt -> attempt.andThen(() -> showTileImagesActive.setValue(true)));
+        chooseTileImages.andThen(attempt -> attempt.andThen(
+                () -> {
+                    showTileImagesActive.setValue(true);
+                    showGridActive.setValue(true);
+                }));
         return null;
     }
 
