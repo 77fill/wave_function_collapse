@@ -24,8 +24,6 @@ public class UsecaseConfig {
     @Autowired
     private ClasspathStore classpathStore;
     @Autowired
-    private View view;
-    @Autowired
     private ConstraintAppender constraintAppender;
     @Autowired
     private TileSlotGridGenerator tileSlotGridGenerator;
