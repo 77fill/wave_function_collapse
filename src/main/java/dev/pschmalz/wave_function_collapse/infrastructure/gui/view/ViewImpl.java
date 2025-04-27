@@ -6,6 +6,7 @@ import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ImagesGr
 import dev.pschmalz.wave_function_collapse.infrastructure.gui.viewmodel.ViewModel;
 import dev.pschmalz.wave_function_collapse.usecase.interfaces.View;
 import io.vavr.Tuple2;
+import jakarta.annotation.PostConstruct;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,6 +26,12 @@ public class ViewImpl extends PApplet implements View {
     Menu menu;
 
     Queue<Runnable> displayQueue = new ConcurrentLinkedQueue<>();
+
+    @PostConstruct
+    public void init() {
+        imagesGrid.setPApplet(this);
+        menu.setPApplet(this);
+    }
 
     @Override
     public void settings() {

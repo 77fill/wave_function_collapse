@@ -23,17 +23,17 @@ public class ImagesGrid implements Scene {
     @NonFinal
     ImagesGridViewModel viewModel;
     @NonFinal
-    @Setter
     PApplet pApplet;
+
+    public void setPApplet(PApplet pApplet) {
+        this.pApplet = pApplet;
+        this.pAppletDecorator = new PAppletDecorator(pApplet, viewModel);
+    }
 
     @Delegate
     @NonFinal
     PAppletDecorator pAppletDecorator;
 
-    @PostConstruct
-    public void init() {
-        pAppletDecorator = new PAppletDecorator(pApplet, viewModel);
-    }
 
     @Override
     public void draw() {

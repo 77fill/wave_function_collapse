@@ -48,12 +48,7 @@ public class GUIConfig {
 
     @Bean
     public ViewImpl view() {
-        var view = new ViewImpl(viewModel(), Tuple(1000,1000), imagesGrid(), imagesGridViewModel(), tileSlotGridViewModel(), menu());
-
-        imagesGrid().setPApplet(view);
-        menu().setPApplet(view);
-
-        return view;
+        return new ViewImpl(viewModel(), Tuple(1000,1000), imagesGrid(), imagesGridViewModel(), tileSlotGridViewModel(), menu());
     }
 
     @Bean
